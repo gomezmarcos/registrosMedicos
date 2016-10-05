@@ -1,0 +1,94 @@
+usuario:
+	datos de emergencia - mapa string
+	datos personales - mapa string
+	foto de perfil 
+
+antecedentes
+	mapa string
+	medicaciones : nombre, droga, posologia
+	
+varios 
+	campos posibles: fecha titulo descripcion1 descripcion2 archivos
+
+estudios clinicos
+	lab: lista de <Documentacion>
+	rx:
+	eco:
+	otro:
+
+<Documentacion>
+	fecha
+	titulo
+	descripcion1
+	descripcion2
+	List<archivo>
+
+===DDBB===
+usuario:			id, dni, nombres, apellidos, mail, telefonosCelulares, telefonosFijos;
+usuario_data:			id, usuario_id, tipoDato, nombre, valor, isEditable, orden;
+antecedentes:			id, id_tipoAntecedente, fecha, nombre, valor, valorAlternativo;
+tipoAntecedentes:		id, tipo :: internacion, general, medicacion;
+usuario__antecedente		id_usuario, id_antecedente;
+
+estudiosClinicos:		id, fecha, tipoEstudioClinico_id, nombre, descripcion;
+tipoEstudioClinico:		id, tipo :: lab, rx, eco, otro;
+adjuntos:			id, nombre, path, extension;
+estudios__adjuntos:		id_estudio, id_adjunto;
+usuario__estudiosClinicos:	id_usuario, id_estudioClinico;
+
+===POO===
+Usuario
+    .dataPersonal<Tupla>
+    .dataEmergencia<Tupla>
+    .id
+    .nombre
+    .apellido
+    .dni
+    .celulares
+    .telefonos
+    .List<Antecedente>
+    .List<EstudioClinico>
+
+Tupla
+    .id
+    .key
+    .value
+    .orden
+    .isEditable
+
+Antecedente
+    .id
+    .tipo
+    .fecha
+    .nombre
+    .valor
+    .valorAlternativo
+
+Adjunto
+    .id
+    .nombre
+    .path
+    .extension
+
+EstudioClinico
+    .id
+    .tipo
+    .fecha
+    .nombre
+    .descripcion
+    .List<Adjunto>
+	
+===FILE===
+usuario_id/tipoEstudio/idEstudio/archivos..
+
+LEER:
+	-Hacemos dinamicos los campos de DATOS PERSONALES Y EMERGENCIA?
+	-Hacemos tabla de habitos personales?
+
+TODO:
+	-guardar data en base de datos
+	-guardar archivo en hd
+	-eliminar archivos de hd
+
+WISH:	-crop antes de subir imagenes
+	-resize img antes de subir

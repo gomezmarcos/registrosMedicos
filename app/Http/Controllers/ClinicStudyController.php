@@ -5,6 +5,7 @@ namespace clinica\Http\Controllers;
 use Illuminate\Http\Request;
 use clinica\LaboratoryStudy;
 use clinica\RxStudy;
+use clinica\OtroStudy;
 use clinica\EcoStudy;
 use clinica\DocumentStudy;
 use clinica\GalleryConfigurationItem;
@@ -26,16 +27,41 @@ class ClinicStudyController extends Controller
         $studies = LaboratoryStudy::where('user_id', Auth::user()->id)->get();
         $rxStudies = RxStudy::where('user_id', Auth::user()->id)->get();
         $ecoStudies = EcoStudy::where('user_id', Auth::user()->id)->get();
-        //$rxs
-        //ecos
-        //otros
+        $otroStudies = OtroStudy::where('user_id', Auth::user()->id)->get();
 
-		return view('main.clinicStudy.index')
-			->with('labStudies', $studies)
-            ->with('rxStudies', $rxStudies)
-            ->with('ecoStudies', $ecoStudies)
-			->with('ch', 'ch.value');
+	return view('main.clinicStudy.index')
+		        ->with('labStudies', $studies)
+            	->with('rxStudies', $rxStudies)
+            	->with('ecoStudies', $ecoStudies)
+            	->with('otroStudies', $otroStudies)
+		        ->with('ch', 'ch.value');
     }
+
+    //OTRO DATA MANIPULATION :: BEGIN
+    function storeOtroStudy(Request $req){
+        $m = new OtroStudy();
+        $m->user_id=Auth::user()->id;
+        $m->title=$req->title;
+        $m->date=$req->createOtroDate;
+        $m->save();
+
+        return redirect()->action('ClinicStudyController@index');
+    }
+
+    function updateOtroStudy($id, Request $req){
+        $m = OtroStudy::findOrFail($id);
+        $m->title = $req->title;
+        $m->date = $req->editOtroDate;
+        $m->save();
+        return redirect()->action('ClinicStudyController@index');
+    }
+
+    function destroyOtroStudy($id){
+        $study = OtroStudy::findOrFail($id);
+        self::destroyStudyDocuments($study);
+        return redirect()->action('ClinicStudyController@index');
+    }
+    //OTRO DATA MANIPULATION :: END
 
     //RX DATA MANIPULATION :: BEGIN
     function storeRxStudy(Request $req){
@@ -153,6 +179,8 @@ class ClinicStudyController extends Controller
             $studyType = 'rx';
         }elseif ($req->studyType == 'eco') {
             $studyType = 'eco';
+        }elseif ($req->studyType == 'otro') {
+            $studyType = 'otro';
         }else{
             Log::error('no se identifico tipo de estudio');
         }
@@ -200,14 +228,21 @@ class ClinicStudyController extends Controller
         }elseif ($req->studyType == 'eco') {
             $studyType = 'eco';
             $pic = $req->file('ecoInputFile')[0];
+        }elseif ($req->studyType == 'otro') {
+            $studyType = 'otro';
+            $pic = $req->file('otroInputFile')[0];
         }else{
             Log::error('no se identifico tipo de estudio');
         }
+
 
         $d->path='/images/' . Auth::user()->id . '/study/'. $studyType . '/' . $req->docId . '/'; 
         if(is_null($pic)){
             return '{}';
         }
+        /*
+	    CHECK::margomez es necesario un id por cada sub modulo
+         */
         $d->laboratory_study_id = $req->docId;
         $d->rx_study_id = $req->docId;
         $d->name=$pic->getClientOriginalName();

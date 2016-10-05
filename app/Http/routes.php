@@ -38,13 +38,19 @@ Route::put('updateRxStudy/{id}',
 Route::delete('destroyRxStudy/{id}',
 	['as' => 'destroyRxLaboratoryStudy', 'uses' => 'ClinicStudyController@destroyRxStudy']);
 
+Route::put('storeOtroStudy',
+	['as' => 'storeOtroStudy', 'uses' => 'ClinicStudyController@storeOtroStudy']);
+Route::put('updateOtroStudy/{id}',
+	['as' => 'updateOtroStudy', 'uses' => 'ClinicStudyController@updateOtroStudy']);
+Route::delete('destroyOtroStudy/{id}',
+	['as' => 'destroyOtroLaboratoryStudy', 'uses' => 'ClinicStudyController@destroyOtroStudy']);
+
 Route::put('storeEcoStudy',
 	['as' => 'storeEcoStudy', 'uses' => 'ClinicStudyController@storeEcoStudy']);
 Route::put('updateEcoStudy/{id}',
 	['as' => 'updateEcoStudy', 'uses' => 'ClinicStudyController@updateEcoStudy']);
 Route::delete('destroyEcoStudy/{id}',
 	['as' => 'destroyEcoLaboratoryStudy', 'uses' => 'ClinicStudyController@destroyEcoStudy']);
-
 
 Route::get('profile',
 	['as' => 'profile', 'uses' => 'ProfileController@index']);

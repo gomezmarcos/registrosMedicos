@@ -4,6 +4,7 @@
     <script src="/js/module/module-clinicStudy-laboratory.js"></script>
     <script src="/js/module/module-clinicStudy-rx.js"></script>
     <script src="/js/module/module-clinicStudy-eco.js"></script>
+    <script src="/js/module/module-clinicStudy-otro.js"></script>
 @endsection
 
 @section('title')

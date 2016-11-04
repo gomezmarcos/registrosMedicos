@@ -11,6 +11,7 @@
 @section('content')
 <div class="container">
     <h3 class="page-header">Editar Perfil</h3>
+<p>En esta seccion podremos editar informacion para que ante alguna eventualidad, nuestros datos esten claros y la ayuda sea pertinente.</p>
 
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#generalData">Datos Personales</a></li>

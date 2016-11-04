@@ -93,6 +93,14 @@
           required data-error="Este campo es requerido">
         <div class="help-block with-errors"></div>
       </div>
+
+      <div class="form-group ">
+        <label for="birthdate" class="control-label">Fecha de Nacimiento</label>
+        <input type="text" id="birthdate" name="birthdate" class="form-control" 
+          value="{{ $p->birthDate or '' }}" 
+          required data-error="Este campo es requerido">
+        <div class="help-block with-errors"></div>
+      </div>
    </div> 
    
   </div>

@@ -6,9 +6,13 @@
     <input type="hidden" name="_token" value="{{ csrf_token() }}">
     <input type="hidden" name="_method" value="put" />
       <h3>Laboratorio</h3>
+      <div class="alert alert-info text-center" >Aqui puede cargar todos sus estudios de Laboratorio. Es una manera facil de mantener organizada sus estudios y que sean de facil acceso al buscarlos.</div>
 
     <div class="col-md-12">
-        <button class="btn btn-default pull-right btn-create-laboratory-data" id="btnNewLab">Nuevo</button>
+        <div class="row">
+        <button class="btn btn-primary  btn-create-laboratory-data" id="btnNewLab">Nuevo Estudio</button>
+        </div>
+        <div class="row">
         <div id="div-laboratorio">
           <div class="table-responsive">
             <table class="table table-hover">
@@ -48,13 +52,8 @@
             </table>
           </div>
         </div>
-
-        <div class="form-group col-md-12 ">
-          <p class="pull-right">
-            <input type="submit" class="btn btn-success" value="Guardar">
-            <a href="profile" class="btn btn-default">Cancelar</a>
-        </p>
         </div>
+
       </div>
     </form>
   </div> <!-- menu container -->

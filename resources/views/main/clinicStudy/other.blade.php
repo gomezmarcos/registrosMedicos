@@ -5,10 +5,15 @@
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <input type="hidden" name="_method" value="put" />
       <h3>Otros</h3>
+      <div class="alert alert-info text-center">Aqui puede cargar sus estudios que no aplican para las otras categorias como son Laboratorio, Rayos(Rx) y Ecografias</div>
 
     <div class="col-md-12">
-        <button class="btn btn-default pull-right btn-create-otro-data" id="btnNewOtro">Nuevo</button>
-        <div id="div-laboratorio"><div class="table-responsive">
+        <div class="row">
+            <button class="btn btn-primary btn-create-otro-data" id="btnNewOtro">Nuevo Estudio</button>
+        </div>
+        <div class="row">
+        <div id="div-otro"><div class="table-responsive">
+        <!--<div id="div-laboratorio"><div class="table-responsive"> -->
             <table class="table table-hover">
                 <thead>
                     <tr>
@@ -53,14 +58,9 @@
                 </tbody>
             </table>
         </div>
+</div>
     </div>
 
-    <div class="form-group col-md-12 ">
-      <p class="pull-right">
-        <input type="submit" class="btn btn-success" value="Guardar">
-        <a href="profile" class="btn btn-default">Cancelar</a>
-    </p>
-    </div>
     </div>
     </form>
 </div> <!-- menu container -->

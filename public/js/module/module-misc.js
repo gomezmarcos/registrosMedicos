@@ -120,4 +120,52 @@
         $( "#dateEditForm" ).datepicker();
         $( "#dateEditForm" ).datepicker( "option", "dateFormat", "d/mm/yy" );
 
+        $( "#miscDocEditionDialog" ).dialog({
+          resizable: false,
+          autoOpen: false,
+          modal: true,
+          width: "70%",
+          buttons: {
+            "Cerrar": function() {
+              $( this ).dialog( "close" );
+            }
+          }
+        });
+
+        $("[name='btnEditMiscDoc'").on( "click", function() {
+            var docId = $(this).closest("tr").find("#miscId").html();
+            $.get( "/miscImages?miscId="+docId, function( data ) {
+              console.log(data[0]);
+              $('#miscInputFile').fileinput('destroy');
+              $('#miscInputFile').fileinput({
+                initialPreview: data[0],
+                uploadUrl: "/updateMiscDocument/", // server upload action
+                uploadExtraData : {
+                  '_token' : $("input[name='_token']").val(),
+                  'docId' : docId
+                  },
+                deleteExtraData : {
+                  '_token' : $("input[name='_token']").val(),
+                  'docId' : docId
+                  },
+                mainClass: "input-group",
+                uploadAsync: true,
+                showUpload: true,
+                overwriteInitial: false,
+                purifyHtml: true,
+                maxFileCount: 1,
+                initialPreviewAsData: true, // identify if you are sending preview data only and not the raw markup
+                initialPreviewFileType: 'image', // image is the default and can be overridden in config below
+                previewZoomSettings: {
+                  image: {width: "auto", height: "100%"},
+                  pdf: {width: "100%", height: "100%", 'min-height': "480px"},
+                  other: {width: "auto", height: "100%", 'min-height': "480px"}
+                },
+                initialPreviewConfig: data[1],
+              });
+
+            $( "#miscDocEditionDialog" ).data('tag', this);
+            $( "#miscDocEditionDialog" ).dialog('open');
+          });
+        });
     });

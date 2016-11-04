@@ -30,15 +30,18 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Registro Medico Personal</a>
+                <a class="navbar-brand" href="/resume">Registro Medico Personal</a>
             </div>
             <div id="navbar" class="collapse navbar-collapse">
                 <ul class="nav navbar-nav">
-                    <!-- <li><a href="#">Datos Personales</a></li> -->
+                    <li><a href="/resume">Datos Personales</a></li> 
                     <li><a href="/clinicHistory">Antecedentes Clinicos</a></li>
                     <li><a href="/studies">Estudios Clinicos</a></li>
                     <li><a href="/misc">Varios</a></li>
                     <li><a href="/profile">Editar Perfil</a></li>
+                  @if (Auth::user()->id == 4)
+                    <li><a href="{{ url('/registration') }}">Registrar Usuarios</a></li>
+                  @endif
                     <li>
                         <a href="/logout">Cerrar Sesion <span class="fa fa-power-off"/></a>
                         <!--

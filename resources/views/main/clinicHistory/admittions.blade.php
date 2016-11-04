@@ -7,7 +7,7 @@
       <h3>Internaciones</h3>
 
     <div class="col-md-12">
-        <button class="btn btn-default pull-right btn-create-admittion" id="btnNewAdmittion">Nuevo</button>
+        <button class="btn btn-primary btn-create-admittion" id="btnNewAdmittion">Nueva Internacion</button>
         <div id="div-laboratorio"><div class="table-responsive">
             <table class="table table-hover">
                 <thead>
@@ -58,7 +58,7 @@
 
 <!-- begin - create new addmision modal-->
     <div id="createAdmittionDialog" title="Agregar nueva entrada" class="container">
-        <form action="/clinicHistory/admittion" id="createAdmittionForm" method="post" enctype="multipart/form-data" data-toggle="validator" role="form">
+        <form action="/clinicHistory/storeAdmittion" id="createAdmittionForm" method="post" enctype="multipart/form-data" data-toggle="validator" role="form">
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
     
             <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>
@@ -95,7 +95,7 @@
         <form action="/clinicHistory/admittion/admittionId" id="editAdmittionForm" method="post" enctype="multipart/form-data" data-toggle="validator" role="form">
 
             <input type="hidden" name="_token" value="{{ csrf_token() }}">
-            <input type="hidden" name="_method" value="put" />
+            <input type="hidden" name="_method" value="post" />
     
             <p>
                 <span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>

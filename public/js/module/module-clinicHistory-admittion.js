@@ -3,14 +3,14 @@
       $("a[href='/misc']").parent().addClass("active");//actualiza el nav general activo
         
         $('#createAdmittionForm').validator().on('submit', function (e) {
-          e.preventDefault();
-          if (e.isDefaultPrevented()) {
-            console.log('fuck create if');
+          //e.preventDefault();
+          //if (e.isDefaultPrevented()) {
+           // console.log('fuck create if');
             // handle the invalid form...
-          } else {
-            console.log('fuck create else');
+          //} else {
+           // console.log('fuck create else');
             // everything looks good!
-          }
+          //}
         });
 
         $( "#createAdmittionDialog" ).dialog({
@@ -51,9 +51,9 @@
           open: function(event, ui){
             var trClicked = $("#editAdmittionDialog").data('tag').closest("tr");
             var admittionDate = $(trClicked).find("#admittionDate").text();
-            var admittionTitle = $(trClicked).find("#admittionTitle").text();
+            var admittionTitle = $(trClicked).find("#admittionDescription").text();
             $("#editAdmittionDialog").find("#title").val(admittionTitle);
-            $("#editAdmittionDialog").find("#dateEditForm").val(admittionDate);
+            $("#editAdmittionDialog").find("#editAdmittionDate").val(admittionDate);
           },
           buttons: {
             "Actualizar": function() {
@@ -69,13 +69,13 @@
 
 
         $('#editAdmittionForm').validator().on('submit', function (e) {
-          if (e.isDefaultPrevented()) {
-            console.log('fuck');
+          //if (e.isDefaultPrevented()) {
+           // console.log('fuck');
             // handle the invalid form...
-          } else {
-            console.log('fuck else');
+          //} else {
+           // console.log('fuck else');
             // everything looks good!
-          }
+          //}
         });
 
         $("[name='btnDeleteAdmittion'").on( "click", function() {
@@ -88,7 +88,8 @@
             $( "#editAdmittionDialog" ).dialog('open');
         });
 
-        $(".btn-create-admittion").button().on( "click", function() {
+        $(".btn-create-admittion").button().on( "click", function(event) {
+            event.preventDefault();
             $( "#createAdmittionDialog" ).dialog('open');
         });
 

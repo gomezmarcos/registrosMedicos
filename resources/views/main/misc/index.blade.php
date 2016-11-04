@@ -27,8 +27,9 @@
               <input type="text" class="form-control" name="date" id="date">
             </div>
 
+<!--
             <label class="control-label">Select File</label>
-    <input id="input-1" type="file" multiple class="file">
+            <input id="input-1" type="file" multiple class="file">
     
             <div class="fileinput fileinput-new" data-provides="fileinput">
                 <div id="file-validation" class="alert alert-danger hidden">Debe elegir un archivo!</div>
@@ -42,6 +43,7 @@
                     <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
                 </div>
             </div>
+-->
         </form>
     </div>
 
@@ -75,6 +77,7 @@
               <input type="text" class="form-control" name="date" id="dateEditForm">
             </div>
 
+<!--
             <div class="fileinput fileinput-new" data-provides="fileinput">
                 <div id="file-validation" class="alert alert-danger hidden">Debe elegir un archivo!</div>
                 <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
@@ -88,7 +91,16 @@
                     <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
                 </div>
             </div>
+-->
         </form>
+    </div>
+
+    <div id="miscDocEditionDialog" title="Atenion! Editando." class="container">
+      <div class="form-group form-group-sm">
+        <input id="miscInputFile" name="miscInputFile[]" type="file" multiple class="file-loading">
+        <input type="hidden" name="_token" value="{{ csrf_token() }}">
+        <input type="hidden" name="_method" value="put" />
+      </div>
     </div>
 
 <div class="container">
@@ -117,32 +129,15 @@
                     @foreach ($miscs as $m)
                     <tr id="row-misc-{{ $m->id }}">
                         <td id="miscId" style="display:none">{{ $m->id }}</td>
-                        @if(empty($m->documentMisc))
-                            <td id="miscDate"></td>
-                        @else
-                            <td id="miscDate">{{$m->date}}</td>
-                        @endif
-                        @if(empty($m->documentMisc))
-                            <td id="miscDocumentFile" style="display:none"></td>
-                        @else
-                            <td id="miscDocumentFile" style="display:none">{{ $m->documentMisc->path . '/' . $m->documentMisc->name}}</td>
-                        @endif
+                        <td id="miscDate">{{$m->date or ''}}</td>
                         <td id="miscTitle">{{ $m->title }}</td>
                         <td>
-                            <a  class="document" 
-                            @if(! empty($m->documentMisc))
-                                href="/images/misc/2/{{ $m->id}}">
-                                <i class="fa fa-eye"></i>
-                            </a>
-                            @else
-                            >
-                                <i class="fa fa-eye"></i>
-                            </a>
-                            @endif
-
                             <a href="#" name="editMisc">
                                 <i class="fa fa-edit"></i>
                             </a>
+                              <a href="#" name="btnEditMiscDoc">
+                                  <i class="fa fa-picture-o"></i>
+                              </a>
                         </td>
                         <td>
                             <a href="#">

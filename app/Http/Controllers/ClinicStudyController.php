@@ -235,7 +235,6 @@ class ClinicStudyController extends Controller
             Log::error('no se identifico tipo de estudio');
         }
 
-
         $d->path='/images/' . Auth::user()->id . '/study/'. $studyType . '/' . $req->docId . '/'; 
         if(is_null($pic)){
             return '{}';

@@ -14,7 +14,17 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::get('/resume', 
+    ['as' => 'resume', 'uses' => 'ProfileController@resume']);
+
 Route::resource('misc', 'MiscController');
+Route::get('miscImages',
+	['as' => 'miscImages', 'uses' => 'MiscController@getMiscImages']);
+Route::post('updateMiscDocument',
+	['as' => 'updateMiscDocument', 'uses' => 'MiscController@updateDocument']);
+Route::post('deleteMiscDocument',
+	['as' => 'deleteMiscDocument', 'uses' => 'MiscController@deleteDocument']);
 Route::resource('studies', 'ClinicStudyController');
 
 Route::post('updateLaboratoryDocStudy',
@@ -67,6 +77,26 @@ Route::put('profileHeadDoctor/{id}',
 
 Route::get('clinicHistory',
 	['as' => 'clinicHistory', 'uses' => 'ClinicHistoryController@index']);
+Route::put('clinicHistory/general',
+	['as' => 'clinicHistory.general', 'uses' => 'ClinicHistoryController@storeGeneral']);
+
+Route::put('clinicHistory/admittion',
+	['as' => 'clinicHistory.admittion', 'uses' => 'ClinicHistoryController@admittion']);
+Route::post('clinicHistory/storeAdmittion',
+	['as' => 'clinicHistory.admittion.store', 'uses' => 'ClinicHistoryController@storeAdmittion']);
+Route::post('clinicHistory/admittion/{admittionId}',
+	['as' => 'clinicHistory.admittion.update', 'uses' => 'ClinicHistoryController@updateAdmittion']);
+Route::delete('clinicHistory/admittion/{admittionId}',
+	['as' => 'clinicHistory.admittion.destroy', 'uses' => 'ClinicHistoryController@destroyAdmittion']);
+
+Route::put('clinicHistory/medication',
+	['as' => 'clinicHistory.medication', 'uses' => 'ClinicHistoryController@medication']);
+Route::post('clinicHistory/storeMedication',
+	['as' => 'clinicHistory.medication.store', 'uses' => 'ClinicHistoryController@storeMedication']);
+Route::post('clinicHistory/medication/{medicationId}',
+	['as' => 'clinicHistory.medication.update', 'uses' => 'ClinicHistoryController@updateMedication']);
+Route::delete('clinicHistory/medication/{medicationId}',
+	['as' => 'clinicHistory.medication.destroy', 'uses' => 'ClinicHistoryController@destroyMedication']);
 
 // Retro compatibility routes
 Route::get('/old', function () {
@@ -89,24 +119,29 @@ Route::get('/old/varios', function () {
 });
 
 //Image routing
-Route::get('/images/{user_id}/increible/{image}', function($user_id=null,$image = null){
-	$path = storage_path().'/test-img/test.jpg';
-	if (file_exists($path)) {
-		return Response::download($path);
-	}
-});
-Route::get('/images/misc/{user_id}/{misc_id}', function($user_id=null,$misc_id = null){
-	$path = storage_path().'/images/misc/' . $user_id . '/' . $misc_id . '.jpg';
+
+use clinica\DocumentProfile;
+use clinica\Profile;
+Route::get('/images/profile/', function(){
+    $user = Auth::user();
+	$profile = Profile::where('user_id', $user->id)->get()->first(); 
+	$docProfile = DocumentProfile::where('profile_id', $profile->id)->first();
+	$path = storage_path().'/images/' . $user->id . '/profile/' . $docProfile->name;
 	if (file_exists($path)) {
 		return Response::download($path);
 	}
 });
 
-Route::get('/images/profile/{user_id}', function($user_id=null){
-	$path = storage_path().'/images/profile/' . $user_id . '/' . $user_id . '.jpg';
+use clinica\Misc;
+use clinica\DocumentMisc;
+Route::get('/images/misc/{miscId}', function($miscId = null){
+    $user = Auth::user();
+	$doc = DocumentMisc::where('misc_id', $miscId)->get()->first(); 
+	$path = storage_path() . '/images/' . $user->id . '/misc/' . $doc->name;
 	if (file_exists($path)) {
+        Log::info('existe');
 		return Response::download($path);
-	}
+    }
 });
 
 Route::get('/images/{labType}/{labId}/{name}', function($labType=null, $labId=null, $name=null){
@@ -118,5 +153,6 @@ Route::get('/images/{labType}/{labId}/{name}', function($labType=null, $labId=nu
 });
 
 Route::auth();
-
 Route::get('/home', 'HomeController@index');
+Route::get('/registration', 'RegistrationController@create');
+Route::post('/registration/store', 'RegistrationController@store');

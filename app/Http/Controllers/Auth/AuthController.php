@@ -3,10 +3,12 @@
 namespace clinica\Http\Controllers\Auth;
 
 use clinica\User;
+use clinica\Profile;
 use Validator;
 use clinica\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\ThrottlesLogins;
 use Illuminate\Foundation\Auth\AuthenticatesAndRegistersUsers;
+use Log;
 
 class AuthController extends Controller
 {
@@ -28,7 +30,7 @@ class AuthController extends Controller
      *
      * @var string
      */
-    protected $redirectTo = '/studies';
+    protected $redirectTo = '/resume';
 
     /**
      * Create a new authentication controller instance.
@@ -49,9 +51,9 @@ class AuthController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => 'required|max:255',
+            'names' => 'required|max:255',
+            'email' => 'required|max:255',
             'dni' => 'required|max:9|unique:users',
-            // 'email' => 'required|email|max:255|unique:users',
             'password' => 'required|min:6|confirmed',
         ]);
     }
@@ -64,11 +66,20 @@ class AuthController extends Controller
      */
     protected function create(array $data)
     {
-        return User::create([
-            'name' => $data['name'],
-            // 'email' => $data['email'],
-            'dni' => $data['dni'],
-            'password' => bcrypt($data['password']),
-        ]);
+
+        $user = new User;
+		$user->name=$data['names'];
+		$user->dni=$data['dni'];
+        $user->password = bcrypt($data['password']);
+        $user->save();
+		
+        $profile = new Profile;
+		$profile->names=$data['names'];
+		$profile->dni=$data['dni'];
+		$profile->email1=$data['email'];
+		$profile->user_id=$user->id;
+		$profile->save();
+
+        return $user;
     }
 }

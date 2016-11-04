@@ -10,31 +10,82 @@ use clinica\Misc;
 use clinica\Admittion;
 use clinica\Medication;
 
+use Log;
+use Auth;
+
 class ClinicHistoryController extends Controller
 {
     function index(){
-    	$clinicHistory = new ClinicHistory();
-    	$admittion1 = new Admittion;
-    	$admittion1->id=100;
-    	$admittion1->description='puto';
-    	$admittion2 = new Admittion;
-    	$admittion2->id=101;
-    	$admittion2->description='el que lee';
-    	$medication1 = new Medication();
-    	$medication1->id=1001;
-    	$medication1->name='una buena';
-    	$medication1->drug='crack lvl2';
-    	$medication1->posology='cada 24 horas';
-    	$medication2 = new Medication();
-    	$medication2->id=1002;
-    	$medication2->name='una mala';
-    	$medication2->drug='crack';
-    	$medication2->posology='cada 8 horas';
+        $userId = Auth::user()->id;
+
+        $ch = ClinicHistory::where('user_id',$userId);
+        $ch = !$ch->count() ? new ClinicHistory() : $ch->first();
+
+        $admittions = Admittion::where('user_id',$userId)->get();
+        $medications = Medication::where('user_id',$userId)->get();
+
 		return view('main.clinicHistory.index')
-			->with('m', $clinicHistory)
-			->with('admittions', [$admittion1, $admittion2])
-			->with('medications', [$medication1, $medication2])
-			->with('ch', $clinicHistory);
+			->with('m', $ch)
+			->with('admittions', $admittions)
+			->with('medications', $medications)
+			->with('ch', $ch);
     }
-    //
+
+    function storeGeneral(Request $req){
+        $userId = Auth::user()->id;
+        $ch = new ClinicHistory(); 
+        $ch->user_id=$userId;
+        $ch->diseases=$req->diseases;
+        $ch->allergies=$req->allergies;
+        $ch->implants=$req->implants;
+        $ch->vaccines=$req->vaccines;
+        $ch->save();
+        return redirect()->action('ClinicHistoryController@index');
+    }
+
+    function storeAdmittion(Request $r){
+        $admittion = new Admittion();
+        $admittion->user_id = Auth::user()->id;
+        $admittion->description = $r->title;
+        $admittion->date = $r->date;
+        $admittion->save();
+        return redirect()->action('ClinicHistoryController@index');
+    }
+
+    function updateAdmittion($id, Request $r){
+        $admittion = Admittion::findOrFail($id);
+        $admittion->description = $r->title;
+        $admittion->date = $r->date;
+        $admittion->save();
+        return redirect()->action('ClinicHistoryController@index');
+    }
+
+    function destroyAdmittion($id){
+        Admittion::destroy($id);
+        return redirect()->action('ClinicHistoryController@index');
+    }
+
+    function storeMedication(Request $r){
+        $medication = new Medication();
+        $medication->user_id = Auth::user()->id;
+        $medication->name = $r->name;
+        $medication->drug = $r->drug;
+        $medication->posology = $r->posology;
+        $medication->save();
+        return redirect()->action('ClinicHistoryController@index');
+    }
+    
+    function updateMedication($id, Request $r){
+        $m = Medication::findOrFail($id);
+        $m->name = $r->name;
+        $m->drug = $r->drug;
+        $m->posology = $r->posology;
+        $m->save();
+        return redirect()->action('ClinicHistoryController@index');
+    }
+
+    function destroyMedication($id){
+        Medication::destroy($id);
+        return redirect()->action('ClinicHistoryController@index');
+    }
 }

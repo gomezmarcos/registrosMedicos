@@ -1,4 +1,5 @@
 1-siempre se vuelve a la primer solapa del modulo "estudios", aunque el cambio sea en RX u otra.
+    -hay que enviar el nombre del tab, y crear una funcion on load talque si viene !="" -> .tab('show')
 2-al borrar estudio, deberia borrar todas sus imagenes.
 3-no hay validaciones de ningun tipo!
 4-unificar modulo "varios"

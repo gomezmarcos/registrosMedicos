@@ -2,6 +2,7 @@
 
 @section('stylesAndScripts')
     <script src="/js/module/module-clinicHistory-admittion.js"></script>
+    <script src="/js/module/module-clinicHistory-medication.js"></script>
     <!-- <script src="/js/module/module-clinicHistory-medication.js"></script> -->
 @endsection
 

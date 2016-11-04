@@ -14,17 +14,21 @@ use clinica\ProfileContact;
 use clinica\DocumentProfile;
 
 use Log;
+use Auth;
 
 
 class ProfileController extends Controller
 {
     function index(){
-		$user = User::findOrFail(3);
+        $user=Auth::user();
+		//$user = User::findOrFail(3);
 
 		$profile = Profile::where('user_id', $user->id)->first();
+        $profile = $profile == null ? new Profile : $profile;
+
 		$profileInfo = ProfileInfo::where('user_id', $user->id)->first();
 		$profileInfo = $profileInfo == null ? new ProfileInfo : $profileInfo;
-		// dd($profileInfo);
+
 		$profileHealthCare = ProfileHealthCare::where('user_id', $user->id)->first();
 		$profileHealthCare = $profileHealthCare == null ? new ProfileHealthCare : $profileHealthCare;
 
@@ -36,7 +40,8 @@ class ProfileController extends Controller
 
         $defaultProfilePicture = 'https://addons.cdn.mozilla.net/static/img/zamboni/anon_user.png';
 		$profilePicture = DocumentProfile::where('profile_id', $user->id)->first();
-		$profilePicture = $profilePicture == null ? $defaultProfilePicture : 'images/profile/'.$user->id;
+        
+		$profilePicture = $profilePicture == null ? $defaultProfilePicture : 'images/profile/';
 
 		$listDniTypes = array('DNI'=>'DNI', 'LC'=>'LC', 'LE'=>'LE', 'Cedula'=>'Cedula');
 		$listBloodTypes = array('A rH+'=>'A rh+', 'AB rH+'=>'AB rH+', 'B rH+'=>'B rH+', '0 rH+'=>'0 rH+', 'A rH-'=>'A rh-', 'AB rH-'=>'AB rH-', 'B rH-'=>'B rH-', '0 rH-'=>'0 rH-');
@@ -51,16 +56,13 @@ class ProfileController extends Controller
 			->with('listDniTypes', $listDniTypes)
 			->with('profilePicture', $profilePicture);
 	}
-		//Log::info("been here"); log into logs
-		// error_log('Some message here.'); log into console
-
 
 	function storeProfile(Request $req){
-		Log::info($req);// log into logs
-		$profile = Profile::where('user_id', 3)->first();
+        $user=Auth::user();
+		$profile = Profile::where('user_id', $user->id)->first();
 		if(null == $profile) {
 			$profile = new Profile;
-			$profile->user_id=3;
+			$profile->user_id=$user->id;
 		}
 
 		$profile->names=$req->names;
@@ -77,6 +79,7 @@ class ProfileController extends Controller
 		$profile->cellPhone2=$req->cellPhone2;
 		$profile->phone1=$req->phone1;
 		$profile->phone2=$req->phone2;
+		$profile->birthdate=$req->birthdate;
 		$profile->save();
 
 		//sin cambios -> null
@@ -87,7 +90,8 @@ class ProfileController extends Controller
 		switch ($whatToDo) {
 			case 'DELETE_IMAGE':
 				if(! is_null($profile->documentProfile)){
-					$filename = storage_path() . '/images/profile/3/3' . '.jpg';
+				    $doc = DocumentProfile::where('profile_id', $profile->id)->first();
+					$filename = storage_path() . '/images/'.$user->id . '/profile/' . $doc->name;
 					\File::delete($filename);
 					DocumentProfile::destroy($profile->documentProfile->id);
 				}
@@ -98,13 +102,16 @@ class ProfileController extends Controller
 				if(null == $d) {
 					$d = new DocumentProfile();
 				}
-				$d->path='/images/profile/' . 3;//2 is user_id 
-				$d->name=3;
-				$d->extension=$req->file('profilePicture')->getClientOriginalExtension();
+                $user=Auth::user();
+				$diskPath='/images/' . $user->id . '/profile/';//2 is user_id 
+				$d->name=$req->file('profilePicture')->getClientOriginalName();
 				$d->profile_id=$profile->id;
 				$d->save();
 
-				$req->file('profilePicture')->move( storage_path() . $d->path . '/', $d->name . '.' . $d->extension );
+                $filename = storage_path() . '/images/'.$user->id . '/profile/';
+                \File::cleanDirectory($filename);
+
+				$req->file('profilePicture')->move( storage_path() . $diskPath . '/', $d->name );
 				break;
 			case 'DO_NOTHING':
 				break;
@@ -114,12 +121,13 @@ class ProfileController extends Controller
 	}
 
 	function storeProfileInfo(Request $req){
+        $user=Auth::user();
 		$profileInfo = null;
-		if( !ProfileInfo::where('user_id', 3)->count() ) {
+		if( !ProfileInfo::where('user_id', $user->id)->count() ) {
 			$profileInfo = new ProfileInfo;
-			$profileInfo->user_id=3;
+			$profileInfo->user_id=$user->id;
 		} else {
-			$profileInfo = ProfileInfo::where('user_id', 3)->first();
+			$profileInfo = ProfileInfo::where('user_id', $user->id)->first();
 		}
 
 		$profileInfo->bloodType=$req->bloodType;
@@ -132,12 +140,13 @@ class ProfileController extends Controller
 	}
 	
 	function storeProfileHealthCare(Request $req){
+        $userId=Auth::user()->id;
 		$profileHealthCare = null;
-		if( !profileHealthCare::where('user_id', 3)->count() ) {
+		if( !profileHealthCare::where('user_id', $userId)->count() ) {
 			$profileHealthCare = new profileHealthCare;
-			$profileHealthCare->user_id=3;
+			$profileHealthCare->user_id=$userId;
 		} else {
-			$profileHealthCare = profileHealthCare::where('user_id', 3)->first();
+			$profileHealthCare = profileHealthCare::where('user_id', $userId)->first();
 		}
 
 		$profileHealthCare->name=$req->name;
@@ -153,12 +162,13 @@ class ProfileController extends Controller
 	}
 
 	function storeProfileContact(Request $req){
+        $userId=Auth::user()->id;
 		$profileContact = null;
-		if( !profileContact::where('user_id', 3)->count() ) {
+		if( !profileContact::where('user_id',$userId )->count() ) {
 			$profileContact = new profileContact;
-			$profileContact->user_id=3;
+			$profileContact->user_id=$userId;
 		} else {
-			$profileContact = profileContact::where('user_id', 3)->first();
+			$profileContact = profileContact::where('user_id',$userId )->first();
 		}
 
 		$profileContact->name1=$req->name1;
@@ -178,11 +188,12 @@ class ProfileController extends Controller
 
 	function storeProfileHeadDoctor(Request $req){
 		$profileHeadDoctor = null;
-		if( !profileHeadDoctor::where('user_id', 3)->count() ) {
+        $userId=Auth::user()->id;
+		if( !profileHeadDoctor::where('user_id', $userId)->count() ) {
 			$profileHeadDoctor = new profileHeadDoctor;
-			$profileHeadDoctor->user_id=3;
+			$profileHeadDoctor->user_id=$userId;
 		} else {
-			$profileHeadDoctor = ProfileHeadDoctor::where('user_id', 3)->first();
+			$profileHeadDoctor = ProfileHeadDoctor::where('user_id', $userId)->first();
 		}
 
 		$profileHeadDoctor->name1=$req->name1;
@@ -208,4 +219,33 @@ class ProfileController extends Controller
 			return "SAVE_IMAGE";
 		}
 	}
+	function resume(Request $req){
+        $userId=Auth::user()->id;
+
+		$phc = ProfileHealthCare::where('user_id', $userId)->first();
+		$phc = $phc == null ? new ProfileHealthCare : $phc;
+
+		$phd = profileHeadDoctor::where('user_id', $userId)->first();
+        $phd = $phd == null ? new profileHeadDoctor: $phd;
+
+		$pi = ProfileInfo::where('user_id', $userId)->first();
+        $pi = $pi == null ? new ProfileInfo: $pi;
+
+		$p = Profile::where('user_id', $userId)->first();
+        $p = $p == null ? new Profile: $p;
+
+		$dp = DocumentProfile::where('profile_id', $userId)->first();
+        $dp = $dp == null ? new DocumentProfile: $dp;
+
+		$pc = ProfileContact::where('user_id', $userId)->first();
+		$pc = $pc == null ? new ProfileContact : $pc;
+
+		return view('main.home.resume')
+			->with('p', $p)
+			->with('phc', $phc)
+			->with('pc', $pc)
+			->with('pi', $pi)
+			->with('dp', $dp)
+			->with('phd', $phd);
+    }
 }

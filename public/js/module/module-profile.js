@@ -14,4 +14,6 @@ $(function () {
       $("#editMiscDialog .thumbnail").html("");//borra la imagen de la vista
     });
 
+    $( "#birthdate" ).datepicker();
+    $( "#birthdate" ).datepicker( "option", "dateFormat", "d/mm/yy" );
 });

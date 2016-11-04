@@ -100,7 +100,6 @@
 
         $("[name='btnEditRxDoc'").on( "click", function() {
             var docId = $(this).closest("tr").find("#id").html();
-            // var studyType = $(this).closest('.tab-content').children().first().attr("id");
             var studyType = $(this).closest('div').parent().attr('id').split('-')[1]
             $.get( "/studyImages?studyType="+studyType+"&docId="+docId, function( data ) {
               $('#rxInputFile').fileinput('destroy');

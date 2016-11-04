@@ -2,6 +2,7 @@
 
 namespace clinica\Http\Controllers;
 
+use Illuminate\Support\Facades\Auth;
 use clinica\Http\Requests;
 use Illuminate\Http\Request;
 

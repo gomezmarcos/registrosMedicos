@@ -19,7 +19,7 @@ class RedirectIfAuthenticated
     {
         if (Auth::guard($guard)->check()) {
             // return redirect('/'); TAG margomez
-            return redirect('/studies');
+            return redirect('/resume');
         }
 
         return $next($request);

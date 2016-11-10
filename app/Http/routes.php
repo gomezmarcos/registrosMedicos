@@ -15,6 +15,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/tyc', 
+    ['as' => 'tyc', 'uses' => 'TyCController@index']);
+Route::post('/tyc/store', 
+    ['as' => 'tycStore', 'uses' => 'TyCController@store']);
+
 Route::get('/resume', 
     ['as' => 'resume', 'uses' => 'ProfileController@resume']);
 

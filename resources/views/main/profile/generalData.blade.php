@@ -27,7 +27,6 @@
               initialPreviewShowDelete: false,//delete del thumbnail
               // minFileCount:1,
               initialPreview: [
-              // 'http://kartik-v.github.io/bootstrap-fileinput-samples/samples/Desert.jpg'
                 $("#_profilePicture").val(),
               ],
               initialPreviewAsData: true,

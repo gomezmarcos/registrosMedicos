@@ -9,6 +9,7 @@ use clinica\Misc;
 use clinica\DocumentMisc;
 use clinica\GalleryConfigurationItem;
 
+
 use Log;
 use Auth;
 

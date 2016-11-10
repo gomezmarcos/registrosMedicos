@@ -124,9 +124,12 @@ use clinica\DocumentProfile;
 use clinica\Profile;
 Route::get('/images/profile/', function(){
     $user = Auth::user();
-	$profile = Profile::where('user_id', $user->id)->get()->first(); 
-	$docProfile = DocumentProfile::where('profile_id', $profile->id)->first();
+    /*	$profile = Profile::where('user_id', $user->id)->get()->first();
+    Log::info($profile);
+    */
+	$docProfile = DocumentProfile::where('profile_id', $user->id)->first();
 	$path = storage_path().'/images/' . $user->id . '/profile/' . $docProfile->name;
+    Log::info($path);
 	if (file_exists($path)) {
 		return Response::download($path);
 	}

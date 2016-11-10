@@ -17,7 +17,7 @@ use Auth;
 
 class ClinicStudyController extends Controller
 {
-    function index(){
+    function index(Request $req){
 
         if (!Auth::check()) {
             return redirect('/login');
@@ -29,12 +29,15 @@ class ClinicStudyController extends Controller
         $ecoStudies = EcoStudy::where('user_id', Auth::user()->id)->get();
         $otroStudies = OtroStudy::where('user_id', Auth::user()->id)->get();
 
+		$study =  $req->session()->get('study');
+
 	return view('main.clinicStudy.index')
 		        ->with('labStudies', $studies)
             	->with('rxStudies', $rxStudies)
             	->with('ecoStudies', $ecoStudies)
             	->with('otroStudies', $otroStudies)
-		        ->with('ch', 'ch.value');
+		        ->with('ch', 'ch.value')
+		        ->with('study', $study == null ? 'laboratory' : $study);
     }
 
     //OTRO DATA MANIPULATION :: BEGIN
@@ -45,7 +48,8 @@ class ClinicStudyController extends Controller
         $m->date=$req->createOtroDate;
         $m->save();
 
-        return redirect()->action('ClinicStudyController@index');
+        return redirect()->action('ClinicStudyController@index')
+		        ->with('study', 'other');
     }
 
     function updateOtroStudy($id, Request $req){
@@ -53,13 +57,15 @@ class ClinicStudyController extends Controller
         $m->title = $req->title;
         $m->date = $req->editOtroDate;
         $m->save();
-        return redirect()->action('ClinicStudyController@index');
+        return redirect()->action('ClinicStudyController@index')
+		        ->with('study', 'other');
     }
 
     function destroyOtroStudy($id){
         $study = OtroStudy::findOrFail($id);
         self::destroyStudyDocuments($study);
-        return redirect()->action('ClinicStudyController@index');
+        return redirect()->action('ClinicStudyController@index')
+		        ->with('study', 'other');
     }
     //OTRO DATA MANIPULATION :: END
 
@@ -71,7 +77,8 @@ class ClinicStudyController extends Controller
         $m->date=$req->createRxDate;
         $m->save();
 
-        return redirect()->action('ClinicStudyController@index');
+        return redirect()->action('ClinicStudyController@index')
+		        ->with('study', 'rx');
     }
 
     function updateRxStudy($id, Request $req){
@@ -79,13 +86,15 @@ class ClinicStudyController extends Controller
         $m->title = $req->title;
         $m->date = $req->editRxDate;
         $m->save();
-        return redirect()->action('ClinicStudyController@index');
+        return redirect()->action('ClinicStudyController@index')
+		        ->with('study', 'rx');
     }
 
     function destroyRxStudy($id){
         $study = RxStudy::findOrFail($id);
         self::destroyStudyDocuments($study);
-        return redirect()->action('ClinicStudyController@index');
+        return redirect()->action('ClinicStudyController@index')
+		        ->with('study', 'rx');
     }
     //RX DATA MANIPULATION :: END
 
@@ -97,7 +106,8 @@ class ClinicStudyController extends Controller
         $m->date=$req->createEcoDate;
         $m->save();
 
-        return redirect()->action('ClinicStudyController@index');
+        return redirect()->action('ClinicStudyController@index')
+		        ->with('study', 'eco');
     }
 
     function updateEcoStudy($id, Request $req){
@@ -105,13 +115,15 @@ class ClinicStudyController extends Controller
         $m->title = $req->title;
         $m->date = $req->editRxDate;
         $m->save();
-        return redirect()->action('ClinicStudyController@index');
+        return redirect()->action('ClinicStudyController@index')
+		        ->with('study', 'eco');
     }
 
     function destroyEcoStudy($id){
         $study = EcoStudy::findOrFail($id);
         self::destroyStudyDocuments($study);
-        return redirect()->action('ClinicStudyController@index');
+        return redirect()->action('ClinicStudyController@index')
+		        ->with('study', 'eco');
     }
     //ECO DATA MANIPULATION :: END
     /*
@@ -132,7 +144,8 @@ class ClinicStudyController extends Controller
     function destroyLaboratoryStudy($id){
         $study = LaboratoryStudy::findOrFail($id);
         self::destroyStudyDocuments($study);
-        return redirect()->action('ClinicStudyController@index');
+        return redirect()->action('ClinicStudyController@index')
+		        ->with('study', 'laboratory');
     }
 
     function storeLaboratoryStudy(Request $req){
@@ -142,7 +155,8 @@ class ClinicStudyController extends Controller
         $m->date=$req->createLabDate;
         $m->save();
 
-        return redirect()->action('ClinicStudyController@index');
+        return redirect()->action('ClinicStudyController@index')
+		        ->with('study', 'laboratory');
     }
 
     function updateLaboratoryStudy($id, Request $req){
@@ -150,7 +164,8 @@ class ClinicStudyController extends Controller
         $m->title = $req->title;
         $m->date = $req->editLabDate;
         $m->save();
-        return redirect()->action('ClinicStudyController@index');
+        return redirect()->action('ClinicStudyController@index')
+		        ->with('study', 'laboratory');
     }
 
     //LABORATORY DATA MANIPULATION :: END

@@ -103,8 +103,9 @@ class ProfileController extends Controller
 					$d = new DocumentProfile();
 				}
                 $user=Auth::user();
-				$diskPath='/images/' . $user->id . '/profile/';//2 is user_id 
-				$d->name=$req->file('profilePicture')->getClientOriginalName();
+				$diskPath='/images/' . $user->id . '/profile/';
+				$d->extension=$req->file('profilePicture')->getClientOriginalExtension();
+				$d->name=$user->id . '.' . $d->extension;
 				$d->profile_id=$profile->id;
 				$d->save();
 

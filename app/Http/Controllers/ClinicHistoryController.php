@@ -33,7 +33,9 @@ class ClinicHistoryController extends Controller
 
     function storeGeneral(Request $req){
         $userId = Auth::user()->id;
-        $ch = new ClinicHistory(); 
+        $ch = ClinicHistory::where('user_id',$userId);
+        $ch = !$ch->count() ? new ClinicHistory() : $ch->first();
+
         $ch->user_id=$userId;
         $ch->diseases=$req->diseases;
         $ch->allergies=$req->allergies;

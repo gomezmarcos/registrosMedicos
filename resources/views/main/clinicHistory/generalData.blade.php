@@ -7,21 +7,22 @@
     <!-- basic container -->
     <div class="col-md-12">
         <div class="form-group ">
+            <label for="allergies" class="control-label">Alergias</label>
+            <input type="text" name="allergies" class="form-control" value="{{ $ch->allergies or '' }}"> 
+        </div>        
+
+        <div class="form-group col-md-4">
             <label for="diseases" class="control-label">Enfermedades Base</label>
             {{ Form::textarea('diseases', $ch->diseases ,  ['class' => 'form-control']) }}
         </div>
 
-        <div class="form-group ">
-            <label for="allergies" class="control-label">Alergias</label>
-            <input type="text" name="allergies" class="form-control" value="{{ $ch->allergies or '' }}"> 
-        </div>        
         
-        <div class="form-group ">
+        <div class="form-group col-md-4">
             <label for="implants" class="control-label">Implantes</label>
             {{ Form::textarea('implants', $ch->implants,  ['class' => 'form-control']) }}
         </div>
 
-        <div class="form-group ">
+        <div class="form-group col-md-4">
             <label for="vaccines" class="control-label">Vacunas</label>
             {{ Form::textarea('vaccines', $ch->vaccines,  ['class' => 'form-control']) }}
         </div>

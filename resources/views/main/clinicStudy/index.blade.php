@@ -14,7 +14,13 @@
 @section('content')
 <div class="container">
     <h3 class="page-header">Estudios Clinicos</h3>
+<script >
+    $(function () {
+        $(".container>ul.nav li").removeClass('active');
+        $("a[href='#{{$study}}']").click();
+    });
 
+</script>
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#laboratory">Laboratorio</a></li>
         <li><a data-toggle="tab" href="#rx">RX</a></li>

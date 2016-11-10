@@ -16,6 +16,9 @@ use Auth;
 class ClinicHistoryController extends Controller
 {
     function index(){
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
         $userId = Auth::user()->id;
 
         $ch = ClinicHistory::where('user_id',$userId);

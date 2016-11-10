@@ -20,6 +20,9 @@ use Auth;
 class ProfileController extends Controller
 {
     function index(){
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
         $user=Auth::user();
 		//$user = User::findOrFail(3);
 
@@ -221,6 +224,16 @@ class ProfileController extends Controller
 		}
 	}
 	function resume(Request $req){
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+        /*
+         *TODO:agregar logica de TyC:
+         *Si profile.tyc == ok ? sigo : redirect a pantalla de TyC.
+         *La pantalla de TyC solo tiene un texto con dos opciones:
+         *ACEPTAR:envia al usuario a editar su perfil
+         *CANCELAR: hace logout
+         * */
         $userId=Auth::user()->id;
 
 		$phc = ProfileHealthCare::where('user_id', $userId)->first();

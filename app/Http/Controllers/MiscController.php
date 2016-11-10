@@ -16,6 +16,9 @@ use Auth;
 class MiscController extends Controller
 {
 	function index(){
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
 		$misc = Misc::all();
 		return view('main.misc.index')
 			->with('miscs', $misc);

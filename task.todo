@@ -1,9 +1,3 @@
-1-siempre se vuelve a la primer solapa del modulo "estudios", aunque el cambio sea en RX u otra.
-    -hay que enviar el nombre del tab, y crear una funcion on load talque si viene !="" -> .tab('show')
-2-al borrar estudio, deberia borrar todas sus imagenes.
 3-no hay validaciones de ningun tipo!
-4-unificar modulo "varios"
-5-unificar modulo "perfil"
-6-crear seccion "ADMIN" para hacer cosas como "crear usuarios, actualizar passwords". Se me ocurre que solo los usuarios con email pueden reestablecer su contrasenia. El resto debe hacerlo telefonicamente.
 7-tyc - logica y pantallas.
-8-armar pantalla de login con la data del perfil.
+segmento de habitos:: fumador/deporte/bla

@@ -1,6 +1,7 @@
 <?php
 
-return [
+$test = 
+ [
 
     /*
     |--------------------------------------------------------------------------
@@ -55,7 +56,8 @@ return [
     |
     */
 
-    'from' => ['address' => null, 'name' => null],
+    'from' => ['address' => 'info@registrosmedicos.com.ar', 'name' => 'info'],
+    #'from' => ['address' => null, 'name' => null],
 
     /*
     |--------------------------------------------------------------------------
@@ -110,3 +112,4 @@ return [
     'sendmail' => '/usr/sbin/sendmail -bs',
 
 ];
+return $test;

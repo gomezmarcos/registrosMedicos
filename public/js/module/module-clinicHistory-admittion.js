@@ -1,6 +1,6 @@
     $(function () {
 
-      $("a[href='/misc']").parent().addClass("active");//actualiza el nav general activo
+      $("a[href='/clinicHistory']").parent().addClass("active");//actualiza el nav general activo
         
         $('#createAdmittionForm').validator().on('submit', function (e) {
           //e.preventDefault();

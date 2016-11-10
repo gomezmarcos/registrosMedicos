@@ -1,7 +1,5 @@
     $(function () {
 
-      $("a[href='/misc']").parent().addClass("active");//actualiza el nav general activo
-        
         $('#createMedicationForm').validator().on('submit', function (e) {
           //e.preventDefault();
           //if (e.isDefaultPrevented()) {

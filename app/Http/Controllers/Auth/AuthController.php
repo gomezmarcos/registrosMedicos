@@ -2,6 +2,10 @@
 
 namespace clinica\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Lang;
+
 use clinica\User;
 use clinica\Profile;
 use Validator;
@@ -57,10 +61,51 @@ class AuthController extends Controller
             'password' => 'required|min:6|confirmed',
         ]);
     }
-
+    
+    /*
+     * TAG trait
+     */
     public function loginUsername()
     {
         return property_exists($this, 'username') ? $this->username : 'dni';//TODO TAG super fix que no permitia logueo
+    }
+
+    /**
+     * TAG trait
+     * Send the response after the user was authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  bool  $throttles
+     * @return \Illuminate\Http\Response
+     */
+    public function handleUserWasAuthenticated(Request $request, $throttles)
+    {
+        if ($throttles) {
+            $this->clearLoginAttempts($request);
+        }
+
+        if (method_exists($this, 'authenticated')) {
+            return $this->authenticated($request, Auth::guard($this->getGuard())->user());
+        }
+
+        return redirect()->intended($this->redirectPath());
+    }
+
+    /*
+     * TAG trait
+     */
+    public function authenticated(Request $request, User $user ) {
+        $tyc = Profile::where('user_id', $user->id)->first()->tyc;
+
+        if ($tyc=='ok') {
+            return redirect()->intended( $this->redirectPath() );
+        } else {
+            return redirect()->route('tyc');
+        }
+        
+
+
+        //return redirect()->intended( $this->redirectPath() );
     }
 
     /**

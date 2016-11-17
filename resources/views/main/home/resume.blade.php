@@ -16,7 +16,7 @@
   </div>
   <div class="media-body">
 <p>
-    <h1 class="media-heading">{{$p->lastNames . ',' . $p->names}}</h1>
+    <h1 class="media-heading">{{$p->lastNames . ', ' . $p->names}}</h1>
     <p style="margin-left:15px">
             <b>
             @if ( $p->dniType  !== '')

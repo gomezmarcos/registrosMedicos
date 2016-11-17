@@ -19,11 +19,12 @@
         <div class="form-group">
           <label class="control-label ">Foto de Perfil</label>
           <input id="profilePicture" name="profilePicture" type="file" class="file col-md-5">
+          <input id="profilePictureErased" name="profilePictureErased" type="hidden" value="false" >
         </div>
         <script type="text/javascript">
           $("#profilePicture").fileinput({
               showUpload: false,//upload del componente
-              showRemove: false,//remove del componente
+              showRemove: true,//remove del componente
               initialPreviewShowDelete: false,//delete del thumbnail
               // minFileCount:1,
               initialPreview: [
@@ -40,6 +41,10 @@
                 pdf: {width: "100%", height: "100%", 'min-height': "480px"},
                 other: {width: "auto", height: "100%", 'min-height': "480px"}
               },
+          });
+
+          $('#profilePicture').on('fileclear', function(event) {
+            $("#profilePictureErased").val('true');
           });
 
         </script>

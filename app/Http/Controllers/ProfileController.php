@@ -89,7 +89,7 @@ class ProfileController extends Controller
 		//borrado -> ""
 		//con imagen -> imagen
 
-		$whatToDo = $this->evaluateFile($req->profilePicture);
+		$whatToDo = $this->evaluateFile($req);
 		switch ($whatToDo) {
 			case 'DELETE_IMAGE':
 				if(! is_null($profile->documentProfile)){
@@ -110,6 +110,7 @@ class ProfileController extends Controller
 				$d->extension=$req->file('profilePicture')->getClientOriginalExtension();
 				$d->name=$user->id . '.' . $d->extension;
 				$d->profile_id=$profile->id;
+				$d->path='/images/profile/';
 				$d->save();
 
                 $filename = storage_path() . '/images/'.$user->id . '/profile/';
@@ -122,6 +123,7 @@ class ProfileController extends Controller
 		}
 
 		return redirect()->action('ProfileController@index');
+		//return redirect()->action('ProfileController@resume');
 	}
 
 	function storeProfileInfo(Request $req){
@@ -211,15 +213,17 @@ class ProfileController extends Controller
 
 		return redirect()->action('ProfileController@index');
 	}
-	private function evaluateFile($file){
+	private function evaluateFile($req){
+		$file = $req->profilePicture;
+		$isErased = $req->profilePictureErased;
 
-		if(! is_null($file) && trim($file)===''){// $file==""
+		if( is_null($file) && $isErased ==='true'){// $file==""
 			return "DELETE_IMAGE";
 		}
-		if( is_null($file) ){// $file == null
+		if( is_null($file) && $isErased === 'false' ){// $file == null
 			return "DO_NOTHING";
 		}
-		if(! is_null($file) && trim($file)!==''){ // $file== uploaded file
+		if(! is_null($file) ){ // $file== uploaded file
 			return "SAVE_IMAGE";
 		}
 	}

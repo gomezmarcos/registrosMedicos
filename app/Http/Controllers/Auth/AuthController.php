@@ -58,6 +58,11 @@ class AuthController extends Controller
         ]);
     }
 
+    public function loginUsername()
+    {
+        return property_exists($this, 'username') ? $this->username : 'dni';//TODO TAG super fix que no permitia logueo
+    }
+
     /**
      * Create a new user instance after a valid registration.
      *

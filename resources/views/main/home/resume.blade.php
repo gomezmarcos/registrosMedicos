@@ -79,6 +79,7 @@
                     <tr><td>Alergias</td><td>{{ $pi->allergies or 'No han sido cargadas'}}</td></tr>
                     <tr><td>Implantes</td><td>{{ $pi->implants or 'No han sido cargados'}}</td></tr>
                     <tr><td>Vacunas</td><td>{{ $pi->vaccines or 'No han sido cargadas'}}</td></tr>
+                    <tr><td>Antecedentes Familiares</td><td>{{ $pi->antecedentes or 'No han sido cargadas'}}</td></tr>
                 </table>
             </div>
         </div>

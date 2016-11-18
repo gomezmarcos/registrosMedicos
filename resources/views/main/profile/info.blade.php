@@ -23,14 +23,19 @@
                 value="{{ $pi->allergies or '' }}"> 
         </div>        
         
-        <div class="form-group ">
+        <div class="form-group col-md-4">
               <label for="implants" class="control-label">Implantes</label>
               {{ Form::textarea('implants', $pi->implants,  ['class' => 'form-control']) }}
         </div>
 
-        <div class="form-group ">
+        <div class="form-group col-md-4">
               <label for="vaccines" class="control-label">Vacunas</label>
               {{ Form::textarea('vaccines', $pi->vaccines,  ['class' => 'form-control']) }}
+        </div>
+
+        <div class="form-group col-md-4">
+              <label for="antecedentes" class="control-label">Antecedentes Familiares</label>
+              {{ Form::textarea('antecedentes', $pi->antecedentes,  ['class' => 'form-control']) }}
         </div>
     </div>
 

@@ -15,7 +15,7 @@ return [
 
     'password' => 'El password debe tener por lo menos 6 caracteres y ser igual a la confirmacion.',
     'reset' => 'Su password ha sido reseteada!',
-    'sent' => 'We have e-mailed your password reset link!',
+    'sent' => 'Le hemos enviado por e-mail un link para que pueda reestablecer su contrasena.',
     'token' => 'This password reset token is invalid.',
     'user' => "No podemos encontrar un usaurio con esa direccion de e-mail.",
 

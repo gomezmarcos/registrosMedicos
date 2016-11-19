@@ -9,19 +9,19 @@
     <!-- basic container -->
     <div class="col-md-12">
         <div class="form-group col-md-4">
-              <label for="name1" class="control-label">Nombre</label>
+              <label for="name1" class="control-label"><i class="fa fa-user-md"></i> Nombre</label>
               <input type="text" name="name1" class="form-control" 
                 value="{{ $phd->name1 or '' }}" >
         </div>        
 
         <div class="form-group col-md-4">
-              <label for="contact1" class="control-label">Telefono o Mail</label>
+              <label for="contact1" class="control-label"><i class="fa fa-at"></i> Telefono o Mail</label>
               <input type="text" name="contact1" class="form-control" 
                 value="{{ $phd->contact1 or '' }}"> 
         </div>        
         
         <div class="form-group col-md-4">
-              <label for="note1" class="control-label">Notas</label>
+              <label for="note1" class="control-label"><i class="fa fa-sticky-note-o"></i> Notas</label>
               <input type="text" name="note1" class="form-control" 
                 value="{{ $phd->note1 or '' }}"> 
         </div>
@@ -29,19 +29,19 @@
 
     <div class="col-md-12">
         <div class="form-group col-md-4">
-              <label for="name2" class="control-label">Nombre</label>
+              <label for="name2" class="control-label"><i class="fa fa-user-md"></i> Nombre</label>
               <input type="text" name="name2" class="form-control" 
                 value="{{ $phd->name2 or '' }}" >
         </div>        
 
         <div class="form-group col-md-4">
-              <label for="contact2" class="control-label">Telefono o Mail</label>
+              <label for="contact2" class="control-label"><i class="fa fa-at"></i> Telefono o Mail</label>
               <input type="text" name="contact2" class="form-control" 
                 value="{{ $phd->contact2 or '' }}"> 
         </div>        
         
         <div class="form-group col-md-4">
-              <label for="note2" class="control-label">Notas</label>
+              <label for="note2" class="control-label"><i class="fa fa-sticky-note-o"></i> Notas</label>
               <input type="text" name="note2" class="form-control" 
                 value="{{ $phd->note2 or '' }}"> 
         </div>

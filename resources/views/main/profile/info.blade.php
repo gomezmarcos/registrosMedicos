@@ -12,38 +12,55 @@
     <!-- basic container -->
     <div class="col-md-12">
         <div class="form-group ">
-              <label for="bloodType" class="control-label">Grupo Sanguineo</label>
+              <label for="bloodType" class="control-label"><i class="fa fa-tint"></i> Grupo Sanguineo</label>
               {{ Form::select('bloodType', array($listBloodTypes), $pi->bloodType, ['class' => 'form-control']) }}
               
         </div>        
 
         <div class="form-group ">
-              <label for="allergies" class="control-label">Alergias</label>
+              <label for="allergies" class="control-label"><i class="fa fa-ban"></i> Alergias</label>
               <input type="text" name="allergies" class="form-control" 
                 value="{{ $pi->allergies or '' }}"> 
         </div>        
         
         <div class="form-group col-md-4">
-              <label for="implants" class="control-label">Implantes</label>
+              <label for="implants" class="control-label"><i class="fa fa-scissors"></i> Implantes</label>
               {{ Form::textarea('implants', $pi->implants,  ['class' => 'form-control']) }}
         </div>
 
         <div class="form-group col-md-4">
-              <label for="vaccines" class="control-label">Vacunas</label>
+              <label for="vaccines" class="control-label"><i class="fa fa-eyedropper"></i> Vacunas</label>
               {{ Form::textarea('vaccines', $pi->vaccines,  ['class' => 'form-control']) }}
         </div>
 
         <div class="form-group col-md-4">
-              <label for="antecedentes" class="control-label">Antecedentes Familiares</label>
+              <label for="antecedentes" class="control-label"><i class="fa fa-users"></i> Antecedentes Familiares</label>
               {{ Form::textarea('antecedentes', $pi->antecedentes,  ['class' => 'form-control']) }}
         </div>
+        <div class="form-group " >
+              <label for="fuma" class="control-label " ><i class="fa fa-fire"></i> Fuma? Con que frecuencia?</label>
+              <input type="text" name="fuma" class="form-control " value="{{ $pi->fuma or '' }}" style="border-style:dotted;"> 
+        </div>        
+        <div class="form-group " >
+              <label for="bebe" class="control-label " ><i class="fa fa-beer"></i> Bebe? Con que frecuencia?</label>
+              <input type="text" name="bebe" class="form-control " value="{{ $pi->bebe or '' }}" style="border-style:dotted;"> 
+        </div>        
+        <div class="form-group " >
+              <label for="deporte" class="control-label " ><i class="fa fa-soccer-ball-o"></i> Hace Deporte? Con que frecuencia?</label>
+              <input type="text" name="deporte" class="form-control " value="{{ $pi->deporte or '' }}" style="border-style:dotted;"> 
+        </div>        
+        <div class="form-group " >
+              <label for="otro" class="control-label " ><i class="fa fa-flash"></i> Otro habito? Con que frecuencia?</label>
+              <input type="text" name="otro" class="form-control col-md-6" value="{{ $pi->otro or '' }}" style="border-style:dotted;"> 
+        </div>        
+        
     </div>
+        <div class="form-group ">
+            <p class="pull-right" style="margin-top:15px">
+                <input type="submit" class="btn btn-success" value="Guardar">
+                <a href="profile" class="btn btn-default">Cancelar</a>
+            </p>
+        </div>
 
-    <div class="form-group col-md-12 ">
-      <p class="pull-right">
-        <input type="submit" class="btn btn-success" value="Guardar">
-        <a href="profile" class="btn btn-default">Cancelar</a>
-    </p>
-    </div>
     </form>
 </div> <!-- menu container -->

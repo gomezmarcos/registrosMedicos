@@ -141,6 +141,11 @@ class ProfileController extends Controller
 		$profileInfo->implants=$req->implants;
 		$profileInfo->vaccines=$req->vaccines;
 		$profileInfo->antecedentes=$req->antecedentes;
+
+		$profileInfo->fuma=$req->fuma;
+		$profileInfo->bebe=$req->bebe;
+		$profileInfo->deporte=$req->deporte;
+		$profileInfo->otro=$req->otro;
 		$profileInfo->save();
 
 		return redirect()->action('ProfileController@index');

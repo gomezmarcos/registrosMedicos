@@ -48,8 +48,9 @@
     <div class="tab-content">
         <div id="contacto" class="tab-pane active">
             <div style="margin:20px">
-                <p>Datos de contacto para ubicar al titular del servicio.</p>
+                <div class="alert alert-info text-center" >Informacion importante que debe ser tenida en cuenta antes de una intervencion importante.</div>
                 <table class="table table-hover">
+                    <caption>Datos de Contacto</caption>
                     @if ( $p->email1  !== '')
                     <tr><td><i class="glyphicon glyphicon-envelope"></i></td><td>{{ $p->email1 or ''}}<span></td></tr>
                     @endif
@@ -73,38 +74,55 @@
         </div>
         <div id="info" class="tab-pane fade">
             <div style="margin:20px">
-                <p>Informacion importante que debe ser tenida en cuenta antes de una intervencion importante.</p>
+                <div class="alert alert-info text-center" >Informacion importante que debe ser tenida en cuenta antes de una intervencion importante.</div>
                 <table class="table table-hover">
-                    <tr><td>Grupo Sanguineo</td><td>{{ $pi->bloodType or 'No ha sido cargado'}}</td></tr>
-                    <tr><td>Alergias</td><td>{{ $pi->allergies or 'No han sido cargadas'}}</td></tr>
-                    <tr><td>Implantes</td><td>{{ $pi->implants or 'No han sido cargados'}}</td></tr>
-                    <tr><td>Vacunas</td><td>{{ $pi->vaccines or 'No han sido cargadas'}}</td></tr>
-                    <tr><td>Antecedentes Familiares</td><td>{{ $pi->antecedentes or 'No han sido cargadas'}}</td></tr>
+                    <caption>Informacion Personal</caption>
+                    <tr><td><i class="fa fa-tint"></i> Grupo Sanguineo</td>
+                        <td>{{ Form::textarea('bloodType', $pi->bloodType==''?'No han sido cargadas':$pi->bloodType,  ['class' => 'form-control','readonly'] ) }}</td>
+                    <tr><td><i class="fa fa-ban"></i> Alergias</td>
+                        <td>{{ Form::textarea('allergies', $pi->allergies==''?'No han sido cargadas':$pi->allergies,  ['class' => 'form-control','readonly'] ) }}</td>
+                    <tr><td><i class="fa fa-scissors"></i> Implantes</td>
+                        <td>{{ Form::textarea('implants', $pi->implants==''?'No han sido cargadas':$pi->implants,  ['class' => 'form-control','readonly'] ) }}</td>
+                    <tr><td><i class="fa fa-eyedropper"></i> Vacunas</td>
+                        <td>{{ Form::textarea('vaccines', $pi->vaccines==''?'No han sido cargadas':$pi->vaccines,  ['class' => 'form-control','readonly'] ) }}</td>
+                    <tr><td><i class="fa fa-users"></i> Antecedentes Familiares</td>
+                        <td>{{ Form::textarea('antecedentes', $pi->antecedentes==''?'No han sido cargadas':$pi->antecedentes,  ['class' => 'form-control','readonly'] ) }}</td>
+                    </tr>
+                </table>
+                <table class="table table-hover">
+                    <caption>Habitos Personales</caption>
+                    <tr><td><i class="fa fa-fire"></i> Fuma</td><td>{{ $pi->fuma or ''}}</td></tr>
+                    <tr><td><i class="fa fa-beer"></i> Bebe</td><td>{{ $pi->bebe or ''}}</td></tr>
+                    <tr><td><i class="fa fa-soccer-ball-o"></i> Deportes</td><td>{{ $pi->deporte or ''}}</td></tr>
+                    <tr><td>  <i class="fa fa-flash"></i> Otro</td><td>{{ $pi->otro or ''}}</td></tr>
                 </table>
             </div>
         </div>
+
         <div id="obraSocial" class="tab-pane fade">
-                    <div style="margin:20px">
-                        <p>Informacion de la Obra Social.</p>
-                        <table class="table table-hover">
-                        <tr><td>Empresa</td><td>{{ $phc->name or 'No ha sido cargado'}}</td></tr>
-                        <tr><td>Plan</td><td>{{ $phc->plan or 'No ha sido cargado'}}</td></tr>
-                        <tr><td>Numero de Cliente</td><td>{{ $phc->healthCareId or 'No ha sido cargado'}}</td></tr>
-                        <tr><td>Telefono</td><td>{{ $phc->phone or 'No ha sido cargado'}}</td></tr>
-                        <tr><td>Sitio Web</td><td>{{ $phc->web or 'No ha sido cargado'}}</td></tr>
-                        <tr><td>Contacto</td><td>{{ $phc->contact or 'No ha sido cargado'}}</td></tr>
-                        </table>
-                    </div>
+            <div style="margin:20px">
+                <div class="alert alert-info text-center" >Informacion importante que debe ser tenida en cuenta antes de una intervencion importante.</div>
+                <table class="table table-hover">
+                    <caption>Habitos Personales</caption>
+                    <tr><td>Empresa</td><td>{{ $phc->name or 'No ha sido cargado'}}</td></tr>
+                    <tr><td>Plan</td><td>{{ $phc->plan or 'No ha sido cargado'}}</td></tr>
+                    <tr><td>Numero de Cliente</td><td>{{ $phc->healthCareId or 'No ha sido cargado'}}</td></tr>
+                    <tr><td>Telefono</td><td>{{ $phc->phone or 'No ha sido cargado'}}</td></tr>
+                    <tr><td>Sitio Web</td><td>{{ $phc->web or 'No ha sido cargado'}}</td></tr>
+                    <tr><td>Contacto</td><td>{{ $phc->contact or 'No ha sido cargado'}}</td></tr>
+                </table>
+            </div>
         </div>
+
         <div id="cercanos" class="tab-pane fade">
             <div style="margin:20px">
-                <p>Informacion de los contactos a comunicar en caso de algun accidente.</p>
+                <div class="alert alert-info text-center" >Informacion de los contactos a comunicar en caso de algun accidente.</div>
                 @if ($pc->name1 == '' and $pc->name2 == '' and $pc->name3 == '')
                     <div class="well">Todavia no ha cargado contactos a quien informar.</div>
-                @endif
+                @else
                 <table class="table table-hover">
+                    <caption>Contactos</caption>
                         @if ( $pc->name1  !== '')
-                        <b>Fecha de Nacimiento: </b>{{$p->birthDate }}</br>
                         <tr>
                             <td>
                                 <i class="glyphicon glyphicon-user"></i>
@@ -132,34 +150,37 @@
                         </tr>
                         @endif
                  </table>
+                @endif
             </div>  
         </div>
         <div id="medicos" class="tab-pane fade">
             <div style="margin:20px">
-                <p>Informacion de los medicos de cabecera a consultar en caso de ser necesario.</p>
+                <div class="alert alert-info text-center" >Informacion de los medicos de cabecera a consultar en caso de ser necesario.</div>
                 @if ($phd->name1 == '' and $phd->name2 == '')
                     <div class="well">Todavia no ha cargado medicos de cabecera.</div>
-                @endif
+                @else
                 <table class="table table-hover">
+                    <caption>Medicos</caption>
                         @if ( $phd->name1  !== '')
                         <tr><td>
-                                <i class="glyphicon glyphicon-plus-sign"></i>
+                                <i class="fa fa-user-md"></i>
                                 {{$phd->name1 or ''}}
                             </td>
-                            <td>{{$phd->contact1 or ''}}</td>
-                            <td>{{$phd->note1 or ''}}</td>
+                            <td><i class="fa fa-at"></i> {{$phd->contact1 or ''}}</td>
+                            <td><i class="fa fa-sticky-note-o"></i> {{$phd->note1 or ''}}</td>
                         </tr>
                         @endif
                         @if ( $phd->name2  !== '')
                         <tr><td>
-                                <i class="glyphicon glyphicon-plus-sign"></i>
+                                <i class="fa fa-user-md"></i>
                                 {{$phd->name2 or ''}}
                             </td>
-                            <td>{{$phd->contact2 or ''}}</td>
-                            <td>{{$phd->note2 or ''}}</td>
+                            <td><i class="fa fa-at"></i> {{$phd->contact2 or ''}}</td>
+                            <td><i class="fa fa-sticky-note-o"></i> {{$phd->note2 or ''}}</td>
                         </tr>
                         @endif
                  </table>
+                @endif
             </div>
         </div>
     </div>

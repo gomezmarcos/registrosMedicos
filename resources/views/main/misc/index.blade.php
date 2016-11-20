@@ -28,23 +28,6 @@
               <input type="text" class="form-control" name="date" id="date">
             </div>
 
-<!--
-            <label class="control-label">Select File</label>
-            <input id="input-1" type="file" multiple class="file">
-    
-            <div class="fileinput fileinput-new" data-provides="fileinput">
-                <div id="file-validation" class="alert alert-danger hidden">Debe elegir un archivo!</div>
-                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
-                <span class="fileinput-filename"></span>
-                <div>
-                    <span class="btn btn-default btn-file"><span class="fileinput-new">Examinar</span>
-                    <span class="fileinput-exists">Cambiar</span>
-                        <input type="file" name="file">
-                    </span>
-                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
-                </div>
-            </div>
--->
         </form>
     </div>
 
@@ -78,21 +61,6 @@
               <input type="text" class="form-control" name="date" id="dateEditForm">
             </div>
 
-<!--
-            <div class="fileinput fileinput-new" data-provides="fileinput">
-                <div id="file-validation" class="alert alert-danger hidden">Debe elegir un archivo!</div>
-                <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 200px; height: 150px;"></div>
-                <i data-dismiss="fileinput" id="editMiscDeleteFile" class="fa fa-trash" ></i>
-                <span class="fileinput-filename"></span>
-                <div>
-                    <span class="btn btn-default btn-file"><span class="fileinput-new">Examinar</span>
-                    <span class="fileinput-exists">Cambiar</span>
-                        <input type="file" name="filee" required>
-                    </span>
-                    <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
-                </div>
-            </div>
--->
         </form>
     </div>
 

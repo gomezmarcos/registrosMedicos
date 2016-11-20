@@ -24,7 +24,6 @@ class ProfileController extends Controller
             return redirect('/login');
         }
         $user=Auth::user();
-		//$user = User::findOrFail(3);
 
 		$profile = Profile::where('user_id', $user->id)->first();
         $profile = $profile == null ? new Profile : $profile;
@@ -84,6 +83,9 @@ class ProfileController extends Controller
 		$profile->phone2=$req->phone2;
 		$profile->birthdate=$req->birthdate;
 		$profile->save();
+
+        $user->email=$req->email1;
+        $user->save();
 
 		//sin cambios -> null
 		//borrado -> ""

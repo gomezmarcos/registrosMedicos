@@ -19,7 +19,7 @@ class MiscController extends Controller
         if (!Auth::check()) {
             return redirect('/login');
         }
-		$misc = Misc::all();
+		$misc = Misc::where('user_id',Auth::user()->id);
 		return view('main.misc.index')
 			->with('miscs', $misc);
 	}

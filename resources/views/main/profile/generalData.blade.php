@@ -48,24 +48,6 @@
           });
 
         </script>
-    <!--
-      <label for="file" class="control-label">Foto de Perfil</label>
-      <div class="form-group">
-          <div class="fileinput fileinput-new" data-provides="fileinput">
-              <div class="fileinput-preview thumbnail" data-trigger="fileinput" style="width: 150; height: 150px;"></div>
-              <i data-dismiss="fileinput" id="editMiscDeleteFile" class="fa fa-trash" ></i>
-
-              <div>
-                  <span class="btn btn-default btn-file"><span class="fileinput-new">Examinar</span>
-                  <span class="fileinput-exists">Cambiar</span>
-                      <input type="file" name="file" id="file">
-                      <input type="hidden" id="hasFile" value="{{ $p->documentProfile->name or '' }}">
-                  </span>
-                  <a href="#" class="btn btn-default fileinput-exists" data-dismiss="fileinput">Eliminar</a>
-              </div>
-          </div>
-      </div>
-      -->
       </div>
     <div class="col-md-8">
       <div class="form-group">
@@ -92,7 +74,7 @@
 
       <div class="form-group col-md-9">
         <label for="dni" class="control-label">DNI</label>
-        <input type="text" name="dni" class="form-control" 
+        <input type="text" name="dni" class="form-control" readonly
           value="{{ $p->dni or '' }}" 
           required data-error="Este campo es requerido">
         <div class="help-block with-errors"></div>

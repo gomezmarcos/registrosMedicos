@@ -9,10 +9,6 @@
     <link rel="stylesheet" href="{{env('APP_STATIC_PATH')}}/css/font-awesome.min.css"/>
     <link rel="stylesheet" href="{{env('APP_STATIC_PATH')}}/css/jquery-ui.min.css"/>
 
-<!--
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery.min.js"></script>
--->
     <script src="{{env('APP_STATIC_PATH')}}/js/jquery.min.js"></script>
     <script src="{{env('APP_STATIC_PATH')}}/js/jquery-ui.min.js"></script>
     <script src="{{env('APP_STATIC_PATH')}}/js/fileinput.js"></script>
@@ -25,7 +21,6 @@
 
 </head>
 <body>
-{{ env('APP_STATIC_PATH') }}
     <nav class="navbar navbar-inverse navbar-static-top">
         <div class="container">
             <div class="navbar-header">

@@ -12,7 +12,7 @@
 
 <div class="media">
   <div class="media-left">
-    <img class="media-object  img-rounded" style="width:200px" alt="Perfil" id="img-perfil" src="{{$dp->path or '/images/admin/no_user.png'}}">
+    <img class="media-object  img-rounded" style="width:200px" alt="Perfil" id="img-perfil" src="{{$dp->path or '{{ env('APP_STATIC_PATH') }}/images/admin/no_user.png'}}">
   </div>
   <div class="media-body">
 <p>

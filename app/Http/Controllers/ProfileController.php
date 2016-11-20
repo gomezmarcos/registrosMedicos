@@ -40,7 +40,7 @@ class ProfileController extends Controller
 		$profileHeadDoctor = ProfileHeadDoctor::where('user_id', $user->id)->first();
 		$profileHeadDoctor = $profileHeadDoctor == null ? new profileHeadDoctor : $profileHeadDoctor;
 
-        $defaultProfilePicture = 'https://addons.cdn.mozilla.net/static/img/zamboni/anon_user.png';
+        $defaultProfilePicture = env('APP_STATIC_PATH') . '/images/admin/no_user.png';
 		$profilePicture = DocumentProfile::where('profile_id', $user->id)->first();
         
 		$profilePicture = $profilePicture == null ? $defaultProfilePicture : 'images/profile/';

@@ -12,9 +12,11 @@
 
 <div class="media">
   <div class="media-left">
-    <img class="media-object  img-rounded" style="width:200px" alt="Perfil" id="img-perfil" src="{{$dp->path or '{{ env('APP_STATIC_PATH') }}/images/admin/no_user.png'}}">
   </div>
+  {{ env('APP_STATIC_PATH') }}  
   <div class="media-body">
+  <img class="media-object  img-rounded" style="width:200px" alt="Perfil" id="img-perfil" 
+    src="{{ $dp->path or env('APP_STATIC_PATH') . '/images/admin/no_user.png' }}">
 <p>
     <h1 class="media-heading">{{$p->lastNames . ', ' . $p->names}}</h1>
     <p style="margin-left:15px">

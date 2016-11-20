@@ -39,15 +39,11 @@
                     <li><a href="/studies">Estudios Clinicos</a></li>
                     <li><a href="/misc">Varios</a></li>
                     <li><a href="/profile">Editar Perfil</a></li>
-                  @if (Auth::user()->id == 4)
-                    <!-- <li><a href="{{ url('/registration') }}">Registrar Usuarios</a></li> -->
+                  @if (Auth::user()->id == 4 or Auth::user()->id == 32 or Auth::user()->id == 31)
                     <li><a href="/registration">Registrar Usuarios</a></li>
                   @endif
                     <li>
                         <a href="/logout">Cerrar Sesion <span class="fa fa-power-off"/></a>
-                        <!--
-                        <a href="http://localhost:8000/logout"><span class="fa fa-sign-out"/>Cerrar Session</a>
-                        -->
                     </li>
                 </ul>
             </div><!--/.nav-collapse -->

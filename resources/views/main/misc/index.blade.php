@@ -1,7 +1,8 @@
 @extends('layoutInitial')
 
 @section('stylesAndScripts')
-    <script src="/js/module/module-misc.js"></script>
+    <!--<script src="/js/module/module-misc.js"></script>-->
+    <script src="{{env('APP_STATIC_PATH')}}/js/module/module-misc.js"></script>
 @endsection
 
 @section('title')

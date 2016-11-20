@@ -4,16 +4,20 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
 
-    <link rel="stylesheet" href="/css/fileinput.css"/>
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <link rel="stylesheet" href="/css/font-awesome.min.css"/>
-    <link rel="stylesheet" href="/css/jquery-ui.min.css"/>
+    <link rel="stylesheet" href="{{env('APP_STATIC_PATH')}}/css/fileinput.css"/>
+    <link rel="stylesheet" href="{{env('APP_STATIC_PATH')}}/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{{env('APP_STATIC_PATH')}}/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="{{env('APP_STATIC_PATH')}}/css/jquery-ui.min.css"/>
 
+<!--
     <script src="/js/jquery.min.js"></script>
-    <script src="/js/jquery-ui.min.js"></script>
-    <script src="/js/fileinput.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-   <script src="/js/validator.js"></script>
+    <script src="/js/jquery.min.js"></script>
+-->
+    <script src="{{env('APP_STATIC_PATH')}}/js/jquery.min.js"></script>
+    <script src="{{env('APP_STATIC_PATH')}}/js/jquery-ui.min.js"></script>
+    <script src="{{env('APP_STATIC_PATH')}}/js/fileinput.js"></script>
+    <script src="{{env('APP_STATIC_PATH')}}/js/bootstrap.min.js"></script>
+   <script src="{{env('APP_STATIC_PATH')}}/js/validator.js"></script>
 
     @yield('stylesAndScripts')
 
@@ -21,6 +25,7 @@
 
 </head>
 <body>
+{{ env('APP_STATIC_PATH') }}
     <nav class="navbar navbar-inverse navbar-static-top">
         <div class="container">
             <div class="navbar-header">

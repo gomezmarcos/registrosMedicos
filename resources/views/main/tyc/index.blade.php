@@ -11,6 +11,12 @@
 hola holahola holahola holahola holahola holahola holahola holahola holahola holahola holahola hola
 hola holahola holahola holahola holahola holahola holahola holahola holahola holahola holahola hola
 hola holahola holahola holahola holahola holahola holahola holahola holahola holahola holahola hola
+
+chau chachau chachau chachau chachau chachau chachau chachau chau chau
+chau chachau chachau chachau chachau chachau chachau chachau chau chau
+chau chachau chachau chachau chachau chachau chachau chachau chau chau
+
+<br>buenos dias?buenos dias?buenos dias?<br><br>buenos dias?buenos dias?buenos dias?<br><br>buenos dias?buenos dias?buenos dias?<br>
         </p>
         <input type="submit" value="Aceptar Terminos" class="btn btn-success"/>
         <a href="/logout" class="btn btn-danger">No Aceptar Terminos</a>

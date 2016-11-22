@@ -2,41 +2,49 @@
 @section('content')
 <script>
      $(function () {
-      
-      $("a[href='/resume']").parent().addClass("active");//actualiza el nav general activo
-     $("#liDP").addClass('active');
-
-    });
+        $("a[href='/resume']").parent().addClass("active");//actualiza el nav general activo
+        $("#liDP").addClass('active');
+        jQuery.each($("[name='area'"), function(i,val){
+            matches = $(val).text().match(/\n/g);
+            breaks = matches ? matches.length+1 : 2;
+            $(val).attr('rows',breaks);
+        });
+     });
 </script>
 <div class="container">
 
 <div class="media">
   <div class="media-left">
   </div>
-  {{ env('APP_STATIC_PATH') }}  
   <div class="media-body">
-  <img class="media-object  img-rounded" style="width:200px" alt="Perfil" id="img-perfil" 
-    src="{{ $dp->path or env('APP_STATIC_PATH') . '/images/admin/no_user.png' }}">
-<p>
-    <h1 class="media-heading">{{$p->lastNames . ', ' . $p->names}}</h1>
-    <p style="margin-left:15px">
-            <b>
-            @if ( $p->dniType  !== '')
-                {{$p->dniType}} 
-            @else
-                DNI
-            @endif
-            :</b>
-            {{$p->dni}} <br>
-            @if ( $p->birthDate  !== '')
-                <b>Fecha de Nacimiento: </b>{{$p->birthDate }}</br>
-            @endif
-            {{($p->address!== '')? $p->address . ', ' :  ''}} 
-            {{($p->city!== '')? $p->city . ', ' :  ''}} 
-            {{($p->state!== '')? $p->state . '- ' :  ''}} 
-            {{($p->country!== '')? $p->country . '.' :  ''}} </br>
-    </p>
-  </div>
+    <div class="row">
+        <!-- <div class="col-md-3"> -->
+        <div class="pull-left">
+            <img class="media-object  img-rounded" style="max-height:250px;max-width:250px" alt="Perfil" id="img-perfil" 
+                src="{{ $dp->path or env('APP_STATIC_PATH') . '/images/admin/no_user.png' }}">
+        </div>
+        <div class="col-md-9">
+        <!--<p style="margin-left:15px">-->
+            <p>
+                <h1 class="media-heading">{{$p->lastNames . ', ' . $p->names}}</h1>
+                <b>
+                @if ( $p->dniType  !== '')
+                    {{$p->dniType}} 
+                @else
+                    DNI
+                @endif
+                :</b>
+                {{$p->dni}} <br>
+                @if ( $p->birthDate  !== '')
+                    <b>Fecha de Nacimiento: </b>{{$p->birthDate }}</br>
+                @endif
+                {{($p->address!== '')? $p->address . ', ' :  ''}} 
+                {{($p->city!== '')? $p->city . ', ' :  ''}} 
+                {{($p->state!== '')? $p->state . '- ' :  ''}} 
+                {{($p->country!== '')? $p->country . '.' :  ''}} </br>
+            </p>
+        </div>
+    </div>
 
     <ul class="nav nav-tabs">
         <h4 class="page-header" style="color: red">Información en Caso de Emergencia</h4></br>
@@ -80,15 +88,15 @@
                 <table class="table table-hover">
                     <caption>Informacion Personal</caption>
                     <tr><td><i class="fa fa-tint"></i> Grupo Sanguineo</td>
-                        <td>{{ Form::textarea('bloodType', $pi->bloodType==''?'No han sido cargadas':$pi->bloodType,  ['class' => 'form-control','readonly'] ) }}</td>
+                        <td>{{ Form::textarea('bloodType', $pi->bloodType==''?'No han sido cargadas':$pi->bloodType,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
                     <tr><td><i class="fa fa-ban"></i> Alergias</td>
-                        <td>{{ Form::textarea('allergies', $pi->allergies==''?'No han sido cargadas':$pi->allergies,  ['class' => 'form-control','readonly'] ) }}</td>
+                        <td>{{ Form::textarea('allergies', $pi->allergies==''?'No han sido cargadas':$pi->allergies,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
                     <tr><td><i class="fa fa-scissors"></i> Implantes</td>
-                        <td>{{ Form::textarea('implants', $pi->implants==''?'No han sido cargadas':$pi->implants,  ['class' => 'form-control','readonly'] ) }}</td>
+                        <td>{{ Form::textarea('implants', $pi->implants==''?'No han sido cargadas':$pi->implants,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
                     <tr><td><i class="fa fa-eyedropper"></i> Vacunas</td>
-                        <td>{{ Form::textarea('vaccines', $pi->vaccines==''?'No han sido cargadas':$pi->vaccines,  ['class' => 'form-control','readonly'] ) }}</td>
+                        <td>{{ Form::textarea('vaccines', $pi->vaccines==''?'No han sido cargadas':$pi->vaccines,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
                     <tr><td><i class="fa fa-users"></i> Antecedentes Familiares</td>
-                        <td>{{ Form::textarea('antecedentes', $pi->antecedentes==''?'No han sido cargadas':$pi->antecedentes,  ['class' => 'form-control','readonly'] ) }}</td>
+                        <td>{{ Form::textarea('antecedentes', $pi->antecedentes==''?'No han sido cargadas':$pi->antecedentes,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
                     </tr>
                 </table>
                 <table class="table table-hover">

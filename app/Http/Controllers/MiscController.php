@@ -19,7 +19,7 @@ class MiscController extends Controller
         if (!Auth::check()) {
             return redirect('/login');
         }
-		$misc = Misc::where('user_id',Auth::user()->id);
+		$misc = Misc::where('user_id',Auth::user()->id)->get();
 		return view('main.misc.index')
 			->with('miscs', $misc);
 	}
@@ -30,7 +30,6 @@ class MiscController extends Controller
 		$m->title=$req->title;
 		$m->date=$req->date;
 		$m->save();
-		//falta crear la columna de fecha
 
 		if(! is_null($req->file)){
 			$d = new DocumentMisc();
@@ -52,7 +51,7 @@ class MiscController extends Controller
 		$user_id=Auth::user()->id;
         $study = DocumentMisc::findOrFail($req->key);
         if(! is_null($study)){
-            $filename = storage_path() . '/images/' . $user_id . '/misc/' . $study->misc_id . '.' . $study->extension;
+            $filename = storage_path() . '/images/' . $user_id . '/misc/' . $study->name;
             Log::info($filename);
             \File::delete($filename);
         }
@@ -67,8 +66,7 @@ class MiscController extends Controller
         $d = new DocumentMisc();
         $d->path='/images/misc/'.  $req->docId ; 
         $d->misc_id=$req->docId;
-        //$d->name=$req->docId;
-        $d->name=$req->docId . '.' . $pic->getClientOriginalExtension();
+        $d->name=$pic->getClientOriginalName();
         $d->save();
 
         $pic->move( storage_path() . '/images/' . $user_id . '/misc/' ,  $d->name  );
@@ -81,7 +79,7 @@ class MiscController extends Controller
 		$doc = $misc->documentMisc;
 		Misc::destroy($id);
 		if(! is_null($doc)){
-			$filename = storage_path() . '/images/' . $misc->user_id . '/misc/' . $id . '.' . $doc->extension  ;
+			$filename = storage_path() . '/images/' . $misc->user_id . '/misc/' . $doc->name  ;
 			\File::delete($filename);
 		}
 
@@ -89,6 +87,7 @@ class MiscController extends Controller
 	}
 
 	function update($id, Request $req){
+        Log::info('update');
 		$user=Auth::user();
 		$m = Misc::findOrFail($id);
 		$m->title = $req->title;

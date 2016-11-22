@@ -20,8 +20,8 @@
     @yield('title')
 
 </head>
-<body>
-    <nav class="navbar navbar-inverse navbar-static-top">
+<body style="margin-top:60px;margin-bottom:60px">
+    <nav class="navbar navbar-inverse navbar-static-top navbar-fixed-top">
         <div class="container">
             <div class="navbar-header">
                 <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -51,5 +51,11 @@
     </nav>
     <!-- Page Content -->
     @yield('content')
+    <div style="margin:50px">
+    <hr>
+    <footer>
+        <p class="text-center">© Registros Medicos Personales - 2016</p>
+    </footer>
+    </div>
 </body>
 </html>

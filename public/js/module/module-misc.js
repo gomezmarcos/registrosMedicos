@@ -69,8 +69,7 @@
             "Actualizar": function() {
               var miscId = $("#editMiscDialog").data('tag').closest("tr").id;
               $("#editMiscForm").attr("action", "/misc/"+miscId.split('-')[2]);
-              $("#editMiscForm").submit();
-              // $( this ).dialog( "close" );
+              $("#editMiscForm")[0].submit();
             },
             "Cancelar": function() {
               $( this ).dialog( "close" );

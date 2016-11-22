@@ -2,6 +2,28 @@
   <form action="/profileInfo/2" method="post"
     data-toggle="validator" role="form">
 
+<script>
+     $(function () {
+        jQuery.each($("[name='area'"), function(i,val){
+            matches = $(val).text().match(/\n/g);
+            breaks = matches ? matches.length+1 : 2;
+            $(val).attr('rows',breaks);
+        });
+
+         $("[name='area']").change(function(){
+            //var matches = $("[name='area'").val().match(/\n/g);
+            var matches = $(this).val().match(/\n/g);
+            breaks = matches ? matches.length + 1 : 2;
+            $(this).attr('rows',breaks);
+         });
+
+         $("[name='area']").keyup(function(){
+            var matches = $(this).val().match(/\n/g);
+            breaks = matches ? matches.length + 1 : 2;
+            $(this).attr('rows',breaks);
+         });
+     });
+</script>
     
 
 
@@ -23,20 +45,25 @@
                 value="{{ $pi->allergies or '' }}"> 
         </div>        
         
+        <div class="row">
+        
         <div class="form-group col-md-4">
               <label for="implants" class="control-label"><i class="fa fa-scissors"></i> Implantes</label>
-              {{ Form::textarea('implants', $pi->implants,  ['class' => 'form-control']) }}
+              {{ Form::textarea('implants', $pi->implants,  ['class' => 'form-control', 'name'=>'area']) }}
         </div>
 
         <div class="form-group col-md-4">
               <label for="vaccines" class="control-label"><i class="fa fa-eyedropper"></i> Vacunas</label>
-              {{ Form::textarea('vaccines', $pi->vaccines,  ['class' => 'form-control']) }}
+              {{ Form::textarea('vaccines', $pi->vaccines,  ['class' => 'form-control', 'name'=>'area']) }}
         </div>
 
         <div class="form-group col-md-4">
               <label for="antecedentes" class="control-label"><i class="fa fa-users"></i> Antecedentes Familiares</label>
-              {{ Form::textarea('antecedentes', $pi->antecedentes,  ['class' => 'form-control']) }}
+              {{ Form::textarea('antecedentes', $pi->antecedentes,  ['class' => 'form-control', 'name'=>'area']) }}
         </div>
+
+        </div>
+
         <div class="form-group " >
               <label for="fuma" class="control-label " ><i class="fa fa-fire"></i> Fuma? Con que frecuencia?</label>
               <input type="text" name="fuma" class="form-control " value="{{ $pi->fuma or '' }}" style="border-style:dotted;"> 

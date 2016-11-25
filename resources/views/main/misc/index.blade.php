@@ -76,7 +76,6 @@
     <div class="row">
         <div class="col-lg-12">
             <h3 class="page-header" style="margin-top: -10px">Varios</h3>
-            <div class="alert alert-info text-center" >Aqui puede cargar toda la documentacion que considere imporante que no sean especificos de las otras cateogorias.</div>
         </div>
     </div>
     <div role="tabpanel" class="tab-pane active" id="home">

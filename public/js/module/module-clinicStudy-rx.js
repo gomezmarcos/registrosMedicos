@@ -105,7 +105,7 @@
               $('#rxInputFile').fileinput('destroy');
               $('#rxInputFile').fileinput({
                 initialPreview: data[0],
-                uploadUrl: "/updateLaboratoryDocStudy/", // server upload action
+                uploadUrl: "/updateLaboratoryDocStudy", // server upload action
                 uploadExtraData : {
                   '_token' : $("input[name='_token']").val(),
                   'studyType' : studyType,

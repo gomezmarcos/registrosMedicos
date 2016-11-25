@@ -5,7 +5,6 @@
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <input type="hidden" name="_method" value="put" />
       <h3>Otros</h3>
-      <div class="alert alert-info text-center">Aqui puede cargar sus estudios que no aplican para las otras categorias como son Laboratorio, Rayos(Rx) y Ecografias</div>
 
     <div class="col-md-12">
         <div class="row">

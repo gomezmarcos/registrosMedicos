@@ -5,7 +5,6 @@
   <input type="hidden" name="_token" value="{{ csrf_token() }}">
   <input type="hidden" name="_method" value="put" />
       <h3>Rayos</h3>
-      <div class="alert alert-info text-center" >Aqui puede cargar todos sus estudios de Rayos X(Rx). Es una manera facil de mantener organizada sus estudios y que sean de facil acceso al buscarlos.</div>
 
     <div class="col-md-12">
 <div class="row">

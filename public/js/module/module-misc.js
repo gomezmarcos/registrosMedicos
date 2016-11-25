@@ -138,7 +138,7 @@
               $('#miscInputFile').fileinput('destroy');
               $('#miscInputFile').fileinput({
                 initialPreview: data[0],
-                uploadUrl: "/updateMiscDocument/", // server upload action
+                uploadUrl: "/updateMiscDocument", // server upload action
                 uploadExtraData : {
                   '_token' : $("input[name='_token']").val(),
                   'docId' : docId

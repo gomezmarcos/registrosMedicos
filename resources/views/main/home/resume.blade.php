@@ -58,7 +58,6 @@
     <div class="tab-content">
         <div id="contacto" class="tab-pane active">
             <div style="margin:20px">
-                <div class="alert alert-info text-center" >Informacion importante que debe ser tenida en cuenta antes de una intervencion importante.</div>
                 <table class="table table-hover">
                     <caption>Datos de Contacto</caption>
                     @if ( $p->email1  !== '')
@@ -84,7 +83,6 @@
         </div>
         <div id="info" class="tab-pane fade">
             <div style="margin:20px">
-                <div class="alert alert-info text-center" >Informacion importante que debe ser tenida en cuenta antes de una intervencion importante.</div>
                 <table class="table table-hover">
                     <caption>Informacion Personal</caption>
                     <tr><td><i class="fa fa-tint"></i> Grupo Sanguineo</td>
@@ -111,7 +109,6 @@
 
         <div id="obraSocial" class="tab-pane fade">
             <div style="margin:20px">
-                <div class="alert alert-info text-center" >Informacion importante que debe ser tenida en cuenta antes de una intervencion importante.</div>
                 <table class="table table-hover">
                     <caption>Habitos Personales</caption>
                     <tr><td>Empresa</td><td>{{ $phc->name or 'No ha sido cargado'}}</td></tr>
@@ -126,7 +123,6 @@
 
         <div id="cercanos" class="tab-pane fade">
             <div style="margin:20px">
-                <div class="alert alert-info text-center" >Informacion de los contactos a comunicar en caso de algun accidente.</div>
                 @if ($pc->name1 == '' and $pc->name2 == '' and $pc->name3 == '')
                     <div class="well">Todavia no ha cargado contactos a quien informar.</div>
                 @else
@@ -165,7 +161,6 @@
         </div>
         <div id="medicos" class="tab-pane fade">
             <div style="margin:20px">
-                <div class="alert alert-info text-center" >Informacion de los medicos de cabecera a consultar en caso de ser necesario.</div>
                 @if ($phd->name1 == '' and $phd->name2 == '')
                     <div class="well">Todavia no ha cargado medicos de cabecera.</div>
                 @else

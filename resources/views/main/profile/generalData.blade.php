@@ -23,6 +23,7 @@
         </div>
         <script type="text/javascript">
           $("#profilePicture").fileinput({
+              language: "es",
               showUpload: false,//upload del componente
               showRemove: true,//remove del componente
               initialPreviewShowDelete: false,//delete del thumbnail

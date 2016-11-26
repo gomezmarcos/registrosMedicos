@@ -39,7 +39,7 @@
                 </button>
 
                 <!-- Branding Image -->
-                <a class="navbar-brand" href="{{ url('/login') }}">
+                <a class="navbar-brand" href="http://www.registrosmedicos.com.ar">
                     Registro Medico Personal
                 </a>
             </div>

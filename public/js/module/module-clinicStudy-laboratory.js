@@ -102,6 +102,7 @@
             $.get( "/studyImages?studyType="+studyType+"&docId="+docId, function( data ) {
               $('#inputFile').fileinput('destroy');
               $('#inputFile').fileinput({
+                language: "es",
                 initialPreview: data[0],
                 uploadUrl: "/updateLaboratoryDocStudy", // server upload action
                 uploadExtraData : {

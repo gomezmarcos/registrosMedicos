@@ -12,8 +12,9 @@
     <script src="{{env('APP_STATIC_PATH')}}/js/jquery.min.js"></script>
     <script src="{{env('APP_STATIC_PATH')}}/js/jquery-ui.min.js"></script>
     <script src="{{env('APP_STATIC_PATH')}}/js/fileinput.js"></script>
+    <script src="{{env('APP_STATIC_PATH')}}/js/locales/es.js"></script>
     <script src="{{env('APP_STATIC_PATH')}}/js/bootstrap.min.js"></script>
-   <script src="{{env('APP_STATIC_PATH')}}/js/validator.js"></script>
+    <script src="{{env('APP_STATIC_PATH')}}/js/validator.js"></script>
 
     @yield('stylesAndScripts')
 

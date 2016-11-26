@@ -132,7 +132,6 @@ class ClinicStudyController extends Controller
     function destroyStudyDocuments($study){
         foreach ($study->documents as $s) {
             $filename = storage_path() . $s->path . $s->name;
-            Log::info($filename);
             \File::delete($filename);
             DocumentStudy::destroy($s->id);
         }
@@ -176,7 +175,6 @@ class ClinicStudyController extends Controller
         DocumentStudy::destroy($req->key);
         if(! is_null($study)){
             $filename = storage_path() . $study->path . $study->name;
-            Log::info($filename);
             \File::delete($filename);
         }
 

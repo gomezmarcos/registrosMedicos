@@ -34,9 +34,9 @@
                         <div class="form-group">
                             <div class="col-md-6 col-md-offset-4">
                                 <button type="submit" class="btn btn-primary">
-                                    <i class="fa fa-btn fa-envelope"></i> Enviar enlace de reseteo de contraseña
+                                    <i class="fa fa-btn fa-envelope"></i> Blanqueo de contraseña
                                 </button>
-                                <p>Esta tarea suele demorar unos minutos.</p>
+                                <p>Si el e-mail no le llega, verifique su carpeta de  <strong>SPAM</strong>. </br>Esta tarea puede demorar unos minutos.</p>
                             </div>
                         </div>
                     </form>

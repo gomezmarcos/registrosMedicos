@@ -13,7 +13,7 @@ return [
     |
     */
 
-    'failed' => 'Las credenciales no son compatibles con nuestros registros.',
+    'failed' => 'La informacion no corresponde con nuestros registors.',
     'throttle' => 'Ha realizado muchos intentos para ingresar al sistema. Por favor vuelva a intentar en :seconds segundos.',
 
 ];

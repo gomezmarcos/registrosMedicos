@@ -134,9 +134,9 @@
         $("[name='btnEditMiscDoc'").on( "click", function() {
             var docId = $(this).closest("tr").find("#miscId").html();
             $.get( "/miscImages?miscId="+docId, function( data ) {
-              console.log(data[0]);
               $('#miscInputFile').fileinput('destroy');
               $('#miscInputFile').fileinput({
+                language: "es",
                 initialPreview: data[0],
                 uploadUrl: "/updateMiscDocument", // server upload action
                 uploadExtraData : {

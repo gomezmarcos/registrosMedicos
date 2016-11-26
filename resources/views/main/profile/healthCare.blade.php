@@ -39,11 +39,13 @@
                 value="{{ $phc->web or '' }}" >
         </div>
 
+        <!--
         <div class="form-group">
               <label for="contact" class="control-label"><i class="fa fa-chain"></i> Contacto</label>
               <input type="text" name="contact" class="form-control" 
                 value="{{ $phc->contact or '' }}" >
         </div>
+        -->
         
         <div class="form-group col-md-12 ">
           <p class="pull-right">

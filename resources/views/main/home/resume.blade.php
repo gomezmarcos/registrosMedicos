@@ -47,11 +47,10 @@
     </div>
 
     <ul class="nav nav-tabs">
-        <h4 class="page-header" style="color: red">Información en Caso de Emergencia</h4></br>
+        <h4 class="page-header" style="color: red"><i class="fa fa-ambulance"></i> Información de Emergencia</h4></br>
         <li class="active"><a data-toggle="tab" href="#contacto">Datos Personales</a></li>
         <li><a data-toggle="tab" href="#info">Informacion General</a></li>
         <li><a data-toggle="tab" href="#obraSocial">Obra Social</a></li>
-        <li><a data-toggle="tab" href="#cercanos">Contactos Cercanos</a></li>
         <li><a data-toggle="tab" href="#medicos">Medicos de Cabecera</a></li>
     </ul>
 
@@ -59,7 +58,7 @@
         <div id="contacto" class="tab-pane active">
             <div style="margin:20px">
                 <table class="table table-hover">
-                    <caption>Datos de Contacto</caption>
+                    <caption>Datos del Titular</caption>
                     @if ( $p->email1  !== '')
                     <tr><td><i class="glyphicon glyphicon-envelope"></i></td><td>{{ $p->email1 or ''}}<span></td></tr>
                     @endif
@@ -80,59 +79,17 @@
                     @endif
                 </table>
             </div>
-        </div>
-        <div id="info" class="tab-pane fade">
-            <div style="margin:20px">
-                <table class="table table-hover">
-                    <caption>Informacion Personal</caption>
-                    <tr><td><i class="fa fa-tint"></i> Grupo Sanguineo</td>
-                        <td>{{ Form::textarea('bloodType', $pi->bloodType==''?'No han sido cargadas':$pi->bloodType,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
-                    <tr><td><i class="fa fa-ban"></i> Alergias</td>
-                        <td>{{ Form::textarea('allergies', $pi->allergies==''?'No han sido cargadas':$pi->allergies,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
-                    <tr><td><i class="fa fa-scissors"></i> Implantes</td>
-                        <td>{{ Form::textarea('implants', $pi->implants==''?'No han sido cargadas':$pi->implants,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
-                    <tr><td><i class="fa fa-eyedropper"></i> Vacunas</td>
-                        <td>{{ Form::textarea('vaccines', $pi->vaccines==''?'No han sido cargadas':$pi->vaccines,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
-                    <tr><td><i class="fa fa-users"></i> Antecedentes Familiares</td>
-                        <td>{{ Form::textarea('antecedentes', $pi->antecedentes==''?'No han sido cargadas':$pi->antecedentes,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
-                    </tr>
-                </table>
-                <table class="table table-hover">
-                    <caption>Habitos Personales</caption>
-                    <tr><td><i class="fa fa-fire"></i> Fuma</td><td>{{ $pi->fuma or ''}}</td></tr>
-                    <tr><td><i class="fa fa-beer"></i> Bebe</td><td>{{ $pi->bebe or ''}}</td></tr>
-                    <tr><td><i class="fa fa-soccer-ball-o"></i> Deportes</td><td>{{ $pi->deporte or ''}}</td></tr>
-                    <tr><td>  <i class="fa fa-flash"></i> Otro</td><td>{{ $pi->otro or ''}}</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div id="obraSocial" class="tab-pane fade">
-            <div style="margin:20px">
-                <table class="table table-hover">
-                    <caption>Habitos Personales</caption>
-                    <tr><td>Empresa</td><td>{{ $phc->name or 'No ha sido cargado'}}</td></tr>
-                    <tr><td>Plan</td><td>{{ $phc->plan or 'No ha sido cargado'}}</td></tr>
-                    <tr><td>Numero de Cliente</td><td>{{ $phc->healthCareId or 'No ha sido cargado'}}</td></tr>
-                    <tr><td>Telefono</td><td>{{ $phc->phone or 'No ha sido cargado'}}</td></tr>
-                    <tr><td>Sitio Web</td><td>{{ $phc->web or 'No ha sido cargado'}}</td></tr>
-                    <tr><td>Contacto</td><td>{{ $phc->contact or 'No ha sido cargado'}}</td></tr>
-                </table>
-            </div>
-        </div>
-
-        <div id="cercanos" class="tab-pane fade">
             <div style="margin:20px">
                 @if ($pc->name1 == '' and $pc->name2 == '' and $pc->name3 == '')
                     <div class="well">Todavia no ha cargado contactos a quien informar.</div>
                 @else
                 <table class="table table-hover">
-                    <caption>Contactos</caption>
+                    <caption>Contactos a llamar en caso de Emergencia</caption>
                         @if ( $pc->name1  !== '')
                         <tr>
                             <td>
                                 <i class="glyphicon glyphicon-user"></i>
-                                {{$pc->name1 or ''}} {{ $pc->link1 !== '' ? '(' . $pc->link1 . ')' : '' }}
+                                {{$pc->name1 or ''}} {{ $pc->link1 ? '(' . $pc->link1 . ')' : '' }}
                             </td>
                             <td>{{$pc->contact1 or ''}}</td>
                         </tr>
@@ -141,7 +98,7 @@
                         <tr>
                             <td>
                                 <i class="glyphicon glyphicon-user"></i>
-                                {{$pc->name2 or ''}}({{$pc->link2 or ''}})
+                                {{$pc->name2 or ''}} {{ $pc->link2 ? '(' . $pc->link2 . ')' : '' }}
                             </td>
                             <td>{{$pc->contact2 or ''}}</td>
                         </tr>
@@ -159,6 +116,62 @@
                 @endif
             </div>  
         </div>
+        <div id="info" class="tab-pane fade">
+            <div style="margin:20px">
+                <table class="table table-hover">
+                    <caption>Informacion Personal</caption>
+                    <tr><td><i class="fa fa-tint"></i> Grupo Sanguineo</td>
+                        <td>{{ Form::textarea('bloodType', $pi->bloodType==''?'No han sido cargadas':$pi->bloodType,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
+                    <tr><td><i class="fa fa-ban"></i> Alergias</td>
+                        <td>{{ Form::textarea('allergies', $pi->allergies==''?'No han sido cargadas':$pi->allergies,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
+                    <tr><td><i class="fa fa-scissors"></i> Implantes</td>
+                        <td>{{ Form::textarea('implants', $pi->implants==''?'No han sido cargadas':$pi->implants,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
+                    <tr><td><i class="fa fa-eyedropper"></i> Vacunas</td>
+                        <td>{{ Form::textarea('vaccines', $pi->vaccines==''?'No han sido cargadas':$pi->vaccines,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
+                    <tr><td><i class="fa fa-users"></i> Antecedentes Familiares</td>
+                        <td>{{ Form::textarea('antecedentes', $pi->antecedentes==''?'No han sido cargadas':$pi->antecedentes,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
+                    </tr>
+                </table>
+                @if($pi->fuma or $pi->bebe or $pi->deporte or $pi->otro)
+                <table class="table table-hover">
+                    <caption>Habitos Personales</caption>
+                    @if($pi->fuma )
+                    <tr>
+                        <td class="col-md-1"><i class="fa fa-fire"/></td>
+                        <td class="col-md-1">Fuma</td>
+                        <td class="col-md-10">{{ $pi->fuma or ''}}</td>
+                    </tr>
+                    @endif
+                    @if($pi->bebe )
+                    <tr><td><i class="fa fa-beer"></i> </td><td>Bebe</td><td>{{ $pi->bebe or ''}}</td></tr>
+                    @endif
+                    @if($pi->deporte )
+                    <tr><td><i class="fa fa-soccer-ball-o"></i></td><td>Deportes</td><td>{{ $pi->deporte or ''}}</td></tr>
+                    @endif
+                    @if($pi->otro )
+                    <tr><td>  <i class="fa fa-flash"></i> </td><td>Otro</td><td>{{ $pi->otro or ''}}</td></tr>
+                    @endif
+                </table>
+                @endif
+            </div>
+        </div>
+
+        <div id="obraSocial" class="tab-pane fade">
+            <div style="margin:20px">
+                <table class="table table-hover">
+                    <caption>Obra Social</caption>
+                    <tr><td>Empresa</td><td>{{ $phc->name or 'No ha sido cargado'}}</td></tr>
+                    <tr><td>Plan</td><td>{{ $phc->plan or 'No ha sido cargado'}}</td></tr>
+                    <tr><td>Numero de Cliente</td><td>{{ $phc->healthCareId or 'No ha sido cargado'}}</td></tr>
+                    <tr><td>Telefono</td><td>{{ $phc->phone or 'No ha sido cargado'}}</td></tr>
+                    <tr><td>Sitio Web</td><td>{{ $phc->web or 'No ha sido cargado'}}</td></tr>
+                    <!--
+                    <tr><td>Contacto</td><td>{{ $phc->contact or 'No ha sido cargado'}}</td></tr>
+                    -->
+                </table>
+            </div>
+        </div>
+
         <div id="medicos" class="tab-pane fade">
             <div style="margin:20px">
                 @if ($phd->name1 == '' and $phd->name2 == '')

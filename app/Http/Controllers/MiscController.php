@@ -52,7 +52,6 @@ class MiscController extends Controller
         $study = DocumentMisc::findOrFail($req->key);
         if(! is_null($study)){
             $filename = storage_path() . '/images/' . $user_id . '/misc/' . $study->name;
-            Log::info($filename);
             \File::delete($filename);
         }
         DocumentMisc::destroy($req->key);
@@ -87,7 +86,6 @@ class MiscController extends Controller
 	}
 
 	function update($id, Request $req){
-        Log::info('update');
 		$user=Auth::user();
 		$m = Misc::findOrFail($id);
 		$m->title = $req->title;

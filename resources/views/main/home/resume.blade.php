@@ -18,13 +18,11 @@
   </div>
   <div class="media-body">
     <div class="row">
-        <!-- <div class="col-md-3"> -->
         <div class="pull-left">
             <img class="media-object  img-rounded" style="max-height:250px;max-width:250px" alt="Perfil" id="img-perfil" 
                 src="{{ $dp->path or env('APP_STATIC_PATH') . '/images/admin/no_user.png' }}">
         </div>
         <div class="col-md-9">
-        <!--<p style="margin-left:15px">-->
             <p>
                 <h1 class="media-heading">{{$p->lastNames . ', ' . $p->names}}</h1>
                 <b>
@@ -121,7 +119,9 @@
                 <table class="table table-hover">
                     <caption>Informacion Personal</caption>
                     <tr><td><i class="fa fa-tint"></i> Grupo Sanguineo</td>
-                        <td>{{ Form::textarea('bloodType', $pi->bloodType==''?'No han sido cargadas':$pi->bloodType,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
+                        <td>{{ Form::text('bloodType', $pi->bloodType==''?'No han sido cargadas':$pi->bloodType,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
+                    <tr><td><i class="fa fa-heartbeat"></i> Enfermedades Base</td>
+                        <td>{{ Form::textarea('diseases', $pi->diseases==''?'No han sido cargadas':$pi->diseases,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
                     <tr><td><i class="fa fa-ban"></i> Alergias</td>
                         <td>{{ Form::textarea('allergies', $pi->allergies==''?'No han sido cargadas':$pi->allergies,  ['class' => 'form-control','readonly', 'name'=>'area'] ) }}</td>
                     <tr><td><i class="fa fa-scissors"></i> Implantes</td>

@@ -17,7 +17,6 @@
 
     <ul class="nav nav-tabs">
         <li class="active"><a data-toggle="tab" href="#generalData">Datos Personales</a></li>
-        <li><a data-toggle="tab" href="#info">Info</a></li>
         <li><a data-toggle="tab" href="#healthCare">Obra Social</a></li>
         <li><a data-toggle="tab" href="#contacts">Contactos</a></li>
         <li><a data-toggle="tab" href="#headDoctor">Medico de Cabecera</a></li>
@@ -25,7 +24,6 @@
 
     <div class="tab-content">
         @include('main.profile.generalData')
-        @include('main.profile.info')
         @include('main.profile.healthCare')
         @include('main.profile.contacts')
         @include('main.profile.headDoctor')

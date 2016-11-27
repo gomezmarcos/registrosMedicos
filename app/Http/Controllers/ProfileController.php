@@ -12,10 +12,10 @@ use clinica\ProfileHealthCare;
 use clinica\ProfileHeadDoctor;
 use clinica\ProfileContact;
 use clinica\DocumentProfile;
+use clinica\ClinicHistory;
 
 use Log;
 use Auth;
-
 
 class ProfileController extends Controller
 {
@@ -28,8 +28,8 @@ class ProfileController extends Controller
 		$profile = Profile::where('user_id', $user->id)->first();
         $profile = $profile == null ? new Profile : $profile;
 
-		$profileInfo = ProfileInfo::where('user_id', $user->id)->first();
-		$profileInfo = $profileInfo == null ? new ProfileInfo : $profileInfo;
+		$clinicHistory = ClinicHistory::where('user_id', $user->id)->first();
+		$clinicHistory = $clinicHistory == null ? new ClinicHistory : $clinicHistory;
 
 		$profileHealthCare = ProfileHealthCare::where('user_id', $user->id)->first();
 		$profileHealthCare = $profileHealthCare == null ? new ProfileHealthCare : $profileHealthCare;
@@ -50,7 +50,7 @@ class ProfileController extends Controller
 
 		return view('main.profile.index')
 			->with('p', $profile)
-			->with('pi', $profileInfo)
+			->with('pi', $clinicHistory)
 			->with('pc', $profileContact)
 			->with('phc', $profileHealthCare)
 			->with('phd', $profileHeadDoctor)
@@ -216,7 +216,6 @@ class ProfileController extends Controller
 		$profileHeadDoctor->note2=$req->note2;
 		$profileHeadDoctor->contact1=$req->contact1;
 		$profileHeadDoctor->contact2=$req->contact2;
-		// dd($profileHealthCare);
 		$profileHeadDoctor->save();
 
 		return redirect()->action('ProfileController@index');
@@ -239,13 +238,6 @@ class ProfileController extends Controller
         if (!Auth::check()) {
             return redirect('/login');
         }
-        /*
-         *TODO:agregar logica de TyC:
-         *Si profile.tyc == ok ? sigo : redirect a pantalla de TyC.
-         *La pantalla de TyC solo tiene un texto con dos opciones:
-         *ACEPTAR:envia al usuario a editar su perfil
-         *CANCELAR: hace logout
-         * */
         $userId=Auth::user()->id;
 
 		$phc = ProfileHealthCare::where('user_id', $userId)->first();
@@ -254,8 +246,11 @@ class ProfileController extends Controller
 		$phd = profileHeadDoctor::where('user_id', $userId)->first();
         $phd = $phd == null ? new profileHeadDoctor: $phd;
 
-		$pi = ProfileInfo::where('user_id', $userId)->first();
-        $pi = $pi == null ? new ProfileInfo: $pi;
+		//$pi = ProfileInfo::where('user_id', $userId)->first();
+        //$pi = $pi == null ? new ProfileInfo: $pi;
+
+		$clinicHistory = ClinicHistory::where('user_id', $userId)->first();
+		$clinicHistory = $clinicHistory == null ? new ClinicHistory : $clinicHistory;
 
 		$p = Profile::where('user_id', $userId)->first();
         $p = $p == null ? new Profile: $p;
@@ -270,7 +265,7 @@ class ProfileController extends Controller
 			->with('p', $p)
 			->with('phc', $phc)
 			->with('pc', $pc)
-			->with('pi', $pi)
+			->with('pi', $clinicHistory)
 			->with('dp', $dp)
 			->with('phd', $phd);
     }

@@ -36,7 +36,9 @@
                                 <button type="submit" class="btn btn-primary">
                                     <i class="fa fa-btn fa-envelope"></i> Blanqueo de contraseña
                                 </button>
-                                <p>Si el e-mail no le llega, verifique su carpeta de  <strong>SPAM</strong>. </br>Esta tarea puede demorar unos minutos.</p>
+                                <p>Si el e-mail no le llega, verifique su carpeta de  <strong>SPAM</strong>. 
+                                    </br>Esta tarea puede demorar unos minutos.
+                                </p>
                             </div>
                         </div>
                     </form>

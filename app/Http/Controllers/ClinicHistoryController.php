@@ -27,10 +27,13 @@ class ClinicHistoryController extends Controller
         $admittions = Admittion::where('user_id',$userId)->get();
         $medications = Medication::where('user_id',$userId)->get();
 
+		$listBloodTypes = array('A rH+'=>'A rh+', 'AB rH+'=>'AB rH+', 'B rH+'=>'B rH+', '0 rH+'=>'0 rH+', 'A rH-'=>'A rh-', 'AB rH-'=>'AB rH-', 'B rH-'=>'B rH-', '0 rH-'=>'0 rH-');
+
 		return view('main.clinicHistory.index')
 			->with('m', $ch)
 			->with('admittions', $admittions)
 			->with('medications', $medications)
+			->with('listBloodTypes', $listBloodTypes)
 			->with('ch', $ch);
     }
 
@@ -41,9 +44,17 @@ class ClinicHistoryController extends Controller
 
         $ch->user_id=$userId;
         $ch->diseases=$req->diseases;
-        $ch->allergies=$req->allergies;
-        $ch->implants=$req->implants;
-        $ch->vaccines=$req->vaccines;
+
+		$ch->bloodType=$req->bloodType;
+		$ch->allergies=$req->allergies;
+		$ch->implants=$req->implants;
+		$ch->vaccines=$req->vaccines;
+		$ch->antecedentes=$req->antecedentes;
+
+		$ch->fuma=$req->fuma;
+		$ch->bebe=$req->bebe;
+		$ch->deporte=$req->deporte;
+		$ch->otro=$req->otro;
         $ch->save();
         return redirect()->action('ClinicHistoryController@index');
     }

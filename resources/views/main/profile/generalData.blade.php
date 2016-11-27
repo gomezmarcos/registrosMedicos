@@ -25,6 +25,7 @@
           $("#profilePicture").fileinput({
               language: "es",
               allowedFileExtensions: ["jpg", "jpeg", "png", "gif"],
+              allowedFileTypes: ['image'],
               maxFileSize: 2000,
               showUpload: false,//upload del componente
               showRemove: true,//remove del componente

@@ -96,9 +96,9 @@ class ProfileController extends Controller
 			case 'DELETE_IMAGE':
 				if(! is_null($profile->documentProfile)){
 				    $doc = DocumentProfile::where('profile_id', $profile->id)->first();
-					$filename = storage_path() . '/images/'.$user->id . '/profile/' . $doc->name;
-					\File::delete($filename);
+					$filename = storage_path() . $doc->path . $doc->name;
 					DocumentProfile::destroy($profile->documentProfile->id);
+					\File::delete($filename);
 				}
 				//else : do nothing
 				break;
@@ -106,26 +106,22 @@ class ProfileController extends Controller
 				$d = DocumentProfile::where('profile_id', $profile->id)->first();
 				if(null == $d) {
 					$d = new DocumentProfile();
-				}
-                $user=Auth::user();
-				$diskPath='/images/' . $user->id . '/profile/';
-				$d->extension=$req->file('profilePicture')->getClientOriginalExtension();
-				$d->name=$user->id . '.' . $d->extension;
+                } else {
+				    \File::delete(storage_path() . $d->path . $d->name);
+                }
 				$d->profile_id=$profile->id;
-				$d->path='/images/profile/';
+				$d->path='/images/' . $user->id . '/profile/';
+				$d->name=       $req->file('profilePicture')->getClientOriginalName();
+				$d->extension=  $req->file('profilePicture')->getClientOriginalExtension();
 				$d->save();
 
-                $filename = storage_path() . '/images/'.$user->id . '/profile/';
-                \File::cleanDirectory($filename);
-
-				$req->file('profilePicture')->move( storage_path() . $diskPath . '/', $d->name );
+				$req->file('profilePicture')->move( storage_path() . $d->path , $d->name );
 				break;
 			case 'DO_NOTHING':
 				break;
 		}
 
 		return redirect()->action('ProfileController@index');
-		//return redirect()->action('ProfileController@resume');
 	}
 
 	function storeProfileInfo(Request $req){

@@ -24,6 +24,8 @@
         <script type="text/javascript">
           $("#profilePicture").fileinput({
               language: "es",
+              allowedFileExtensions: ["jpg", "jpeg", "png", "gif"],
+              maxFileSize: 2000,
               showUpload: false,//upload del componente
               showRemove: true,//remove del componente
               initialPreviewShowDelete: false,//delete del thumbnail

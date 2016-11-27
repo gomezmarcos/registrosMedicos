@@ -40,5 +40,4 @@ $(function () {
         yearSuffix: ''
     };
     $.datepicker.setDefaults($.datepicker.regional['es']);
-    //$( "#birthdate" ).datepicker( "option", "regional","es");
 });

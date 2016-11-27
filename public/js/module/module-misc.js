@@ -137,6 +137,7 @@
               $('#miscInputFile').fileinput('destroy');
               $('#miscInputFile').fileinput({
                 language: "es",
+                maxFileSize: 4000,
                 initialPreview: data[0],
                 uploadUrl: "/updateMiscDocument", // server upload action
                 uploadExtraData : {

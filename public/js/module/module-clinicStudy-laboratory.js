@@ -103,6 +103,8 @@
               $('#inputFile').fileinput('destroy');
               $('#inputFile').fileinput({
                 language: "es",
+                allowedFileExtensions: ["jpg", "jpeg", "png", "gif", "pdf"],
+                maxFileSize: 2000,
                 initialPreview: data[0],
                 uploadUrl: "/updateLaboratoryDocStudy", // server upload action
                 uploadExtraData : {

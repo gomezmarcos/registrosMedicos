@@ -42,7 +42,6 @@ class ProfileController extends Controller
 
         $defaultProfilePicture = env('APP_STATIC_PATH') . '/images/admin/no_user.png';
 		$profilePicture = DocumentProfile::where('profile_id', $user->id)->first();
-        
 		$profilePicture = $profilePicture == null ? $defaultProfilePicture : 'images/profile/';
 
 		$listDniTypes = array('DNI'=>'DNI', 'LC'=>'LC', 'LE'=>'LE', 'Cedula'=>'Cedula');
@@ -110,12 +109,13 @@ class ProfileController extends Controller
 				    \File::delete(storage_path() . $d->path . $d->name);
                 }
 				$d->profile_id=$profile->id;
-				$d->path='/images/' . $user->id . '/profile/';
+				$d->path='/images/profile/';
 				$d->name=       $req->file('profilePicture')->getClientOriginalName();
 				$d->extension=  $req->file('profilePicture')->getClientOriginalExtension();
 				$d->save();
 
-				$req->file('profilePicture')->move( storage_path() . $d->path , $d->name );
+				$path='/images/' . $user->id . '/profile/';
+				$req->file('profilePicture')->move( storage_path() . $path , $d->name );
 				break;
 			case 'DO_NOTHING':
 				break;

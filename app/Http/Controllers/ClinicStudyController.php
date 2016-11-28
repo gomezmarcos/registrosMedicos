@@ -130,12 +130,10 @@ class ClinicStudyController extends Controller
     remueve tanto de la base de datos, como de fichero
     */
     function destroyStudyDocuments($study){
-        foreach ($study->documents as $s) {
-            $filename = storage_path() . $s->path . $s->name;
-            \File::delete($filename);
-            DocumentStudy::destroy($s->id);
+        if($study->documents->first()){
+            $filename = storage_path() . $study->documents->first()->path;
+            \File::deleteDirectory($filename);
         }
-
         $study->destroy($study->id);
     }
 
@@ -143,6 +141,7 @@ class ClinicStudyController extends Controller
     function destroyLaboratoryStudy($id){
         $study = LaboratoryStudy::findOrFail($id);
         self::destroyStudyDocuments($study);
+
         return redirect()->action('ClinicStudyController@index')
 		        ->with('study', 'laboratory');
     }

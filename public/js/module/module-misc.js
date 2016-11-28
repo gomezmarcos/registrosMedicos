@@ -114,10 +114,14 @@
             $( "#createMiscDialog" ).dialog('open');
         });
 
-        $( "#date" ).datepicker();
-        $( "#date" ).datepicker( "option", "dateFormat", "d/mm/yy" );
-        $( "#dateEditForm" ).datepicker();
-        $( "#dateEditForm" ).datepicker( "option", "dateFormat", "d/mm/yy" );
+        $( "#date" ).datepicker( {
+            changeMonth: true,
+            changeYear: true
+        });
+        $( "#dateEditForm" ).datepicker( {
+            changeMonth: true,
+            changeYear: true
+        });
 
         $( "#miscDocEditionDialog" ).dialog({
           resizable: false,

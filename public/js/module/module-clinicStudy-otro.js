@@ -143,8 +143,12 @@
         $("#initialPreview").val('"../img/13.jpg", "../img/15.jpeg", "../img/pdf-file.pdf"');
 
     });
-        $( "#editOtroDate" ).datepicker();
-        $( "#editOtroDate" ).datepicker( "option", "dateFormat", "d/mm/yy" );
-        $( "#createOtroDate" ).datepicker();
-        $( "#createOtroDate" ).datepicker( "option", "dateFormat", "d/mm/yy" );
+        $( "#editOtroDate" ).datepicker( {
+            changeMonth: true,
+            changeYear: true
+        });
+        $( "#createOtroDate" ).datepicker( {
+            changeMonth: true,
+            changeYear: true
+        });
 });

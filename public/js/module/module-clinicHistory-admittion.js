@@ -93,9 +93,12 @@
             $( "#createAdmittionDialog" ).dialog('open');
         });
 
-        $( "#editAdmittionDate" ).datepicker();
-        $( "#editAdmittionDate" ).datepicker( "option", "dateFormat", "d/mm/yy" );
-        $( "#createAdmittionDate" ).datepicker();
-        $( "#createAdmittionDate" ).datepicker( "option", "dateFormat", "d/mm/yy" );
-
+        $( "#editAdmittionDate" ).datepicker( {
+            changeMonth: true,
+            changeYear: true
+        });
+        $( "#createAdmittionDate" ).datepicker( {
+            changeMonth: true,
+            changeYear: true
+        });
     });

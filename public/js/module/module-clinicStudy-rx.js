@@ -142,8 +142,12 @@
         $("#initialPreview").val('"../img/13.jpg", "../img/15.jpeg", "../img/pdf-file.pdf"');
 
     });
-        $( "#editRxDate" ).datepicker();
-        $( "#editRxDate" ).datepicker( "option", "dateFormat", "d/mm/yy" );
-        $( "#createRxDate" ).datepicker();
-        $( "#createRxDate" ).datepicker( "option", "dateFormat", "d/mm/yy" );
+        $( "#editRxDate" ).datepicker( {
+            changeMonth: true,
+            changeYear: true
+        });
+        $( "#createRxDate" ).datepicker( {
+            changeMonth: true,
+            changeYear: true
+        });
 });

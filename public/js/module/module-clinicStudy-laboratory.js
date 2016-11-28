@@ -140,8 +140,12 @@
         $("#initialPreview").val('"../img/13.jpg", "../img/15.jpeg", "../img/pdf-file.pdf"');
 
     });
-        $( "#editLabDate" ).datepicker();
-        $( "#editLabDate" ).datepicker( "option", "dateFormat", "d/mm/yy" );
-        $( "#createLabDate" ).datepicker();
-        $( "#createLabDate" ).datepicker( "option", "dateFormat", "d/mm/yy" );
+        $( "#editLabDate" ).datepicker( {
+            changeMonth: true,
+            changeYear: true
+        });
+        $( "#createLabDate" ).datepicker( {
+            changeMonth: true,
+            changeYear: true
+        });
 });

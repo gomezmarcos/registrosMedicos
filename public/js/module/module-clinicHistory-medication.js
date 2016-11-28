@@ -93,9 +93,12 @@
             $( "#createMedicationDialog" ).dialog('open');
         });
 
-        $( "#editMedicationDate" ).datepicker();
-        $( "#editMedicationDate" ).datepicker( "option", "dateFormat", "d/mm/yy" );
-        $( "#createMedicationDate" ).datepicker();
-        $( "#createMedicationDate" ).datepicker( "option", "dateFormat", "d/mm/yy" );
-
+        $( "#createAdmittionDate" ).datepicker( {
+            changeMonth: true,
+            changeYear: true
+        });
+        $( "#editMedicationDate" ).datepicker( {
+            changeMonth: true,
+            changeYear: true
+        });
     });

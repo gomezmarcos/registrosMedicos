@@ -31,6 +31,7 @@ class MiscController extends Controller
 		$m->date=$req->date;
 		$m->save();
 
+        /*
 		if(! is_null($req->file)){
 			$d = new DocumentMisc();
 			$d->path='/images/misc/'; 
@@ -43,15 +44,21 @@ class MiscController extends Controller
 
 			$req->file('file')->move( storage_path() . '/images/' . $m->user_id . '/misc/'. $m->id . '.' . $d->extension  );
 		}
+        */
 
 		return redirect()->action('MiscController@index');
 	}
 
     function deleteDocument(Request $req){
 		$user_id=Auth::user()->id;
-        $study = DocumentMisc::findOrFail($req->key);
+        $study = DocumentMisc::findOrFail($req->key)->get();
+        if( $study->first() ){
+            $study=$study->first();
+            $filename = storage_path() . '/images/' . $user_id . '/misc/' . $study->misc_id . '/' . $study->name;
+            \File::delete($filename);
+        }
         if(! is_null($study)){
-            $filename = storage_path() . '/images/' . $user_id . '/misc/' . $study->name;
+            $filename = storage_path() . '/images/' . $user_id . '/misc/' . $req->key . '/' . $study->name;
             \File::delete($filename);
         }
         DocumentMisc::destroy($req->key);
@@ -62,13 +69,19 @@ class MiscController extends Controller
     function updateDocument(Request $req){
 		$user_id=Auth::user()->id;
         $pic = $req->file('miscInputFile')[0];
+        $d = DocumentMisc::where('misc_id', $req->docId)->get();
+
+
+        if ( $d->first() ) {
+            return response()->json( 'Varios admite solo un archivo adjunto.', 501 );
+        } 
         $d = new DocumentMisc();
         $d->path='/images/misc/'.  $req->docId ; 
         $d->misc_id=$req->docId;
         $d->name=$pic->getClientOriginalName();
         $d->save();
 
-        $pic->move( storage_path() . '/images/' . $user_id . '/misc/' ,  $d->name  );
+        $pic->move( storage_path() . '/images/' . $user_id . '/misc/' . $req->docId . '/' ,  $d->name  );
 
         return '{}';
     }
@@ -78,7 +91,7 @@ class MiscController extends Controller
 		$doc = $misc->documentMisc;
 		Misc::destroy($id);
 		if(! is_null($doc)){
-			$filename = storage_path() . '/images/' . $misc->user_id . '/misc/' . $doc->name  ;
+			$filename = storage_path() . '/images/' . $misc->user_id . '/misc/' . $doc->misc_id . '/' . $doc->name  ;
 			\File::delete($filename);
 		}
 
@@ -91,6 +104,7 @@ class MiscController extends Controller
 		$m->title = $req->title;
 		$m->date = $req->date;
 
+        /*
 		$isImageToUpdate = !is_null($req->filee);
 		$isImageWithContent = $req->filee != '';
 
@@ -106,7 +120,7 @@ class MiscController extends Controller
 			if($isImageWithContent){
 				//create new image
 				$d = new DocumentMisc();
-				$d->path='/images/' . $m->user_id . '/misc/'; 
+				$d->path='/images/misc/'; 
 				$d->name=$m->id;
 				$d->extension=$req->file('filee')->getClientOriginalExtension();
 				$d->misc_id=$m->id;
@@ -115,6 +129,7 @@ class MiscController extends Controller
 			}
 
 		}
+         */
 		$m->save();
 		return redirect()->action('MiscController@index');
 	}
@@ -134,11 +149,12 @@ class MiscController extends Controller
 
         $previews = collect([]);
         $configurations = collect([]);
-        $initialPath =  '/images/misc/'; 
+        $initialPath =  '/images/misc/' . $miscId . '/'; 
         foreach ($models as $s) {
             $caption= $s->name; 
 
-            $previews->prepend($initialPath . $miscId );
+            #$previews->prepend($initialPath . $s->name );
+            $previews->prepend($initialPath );
 
             $m = new GalleryConfigurationItem;
             $m->caption=$caption;

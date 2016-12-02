@@ -127,10 +127,9 @@ Route::get('/old/varios', function () {
 
 use clinica\DocumentProfile;
 use clinica\Profile;
-Route::get('/images/profile/', function(){
+Route::get('/images/profile/{fileName}', function($fileName= null){
     $user = Auth::user();
-	$docProfile = DocumentProfile::where('profile_id', $user->id)->first();
-	$path = storage_path().'/images/' . $user->id . '/profile/' . $docProfile->name;
+	$path = storage_path().'/images/' . $user->id . '/profile/' . $fileName;
 	if (file_exists($path)) {
 		return Response::download($path);
 	}

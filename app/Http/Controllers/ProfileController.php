@@ -28,6 +28,10 @@ class ProfileController extends Controller
 		$profile = Profile::where('user_id', $user->id)->first();
         $profile = $profile == null ? new Profile : $profile;
 
+        $defaultProfilePicture = env('APP_STATIC_PATH') . '/images/admin/no_user.png';
+		$profilePicture = DocumentProfile::where('profile_id', $user->id)->first();
+		$profilePicture = $profilePicture == null ? $defaultProfilePicture : $profilePicture->path;
+
 		$clinicHistory = ClinicHistory::where('user_id', $user->id)->first();
 		$clinicHistory = $clinicHistory == null ? new ClinicHistory : $clinicHistory;
 
@@ -39,10 +43,6 @@ class ProfileController extends Controller
 
 		$profileHeadDoctor = ProfileHeadDoctor::where('user_id', $user->id)->first();
 		$profileHeadDoctor = $profileHeadDoctor == null ? new profileHeadDoctor : $profileHeadDoctor;
-
-        $defaultProfilePicture = env('APP_STATIC_PATH') . '/images/admin/no_user.png';
-		$profilePicture = DocumentProfile::where('profile_id', $user->id)->first();
-		$profilePicture = $profilePicture == null ? $defaultProfilePicture : 'images/profile/';
 
 		$listDniTypes = array('DNI'=>'DNI', 'LC'=>'LC', 'LE'=>'LE', 'Cedula'=>'Cedula');
 		$listBloodTypes = array('A rH+'=>'A rh+', 'AB rH+'=>'AB rH+', 'B rH+'=>'B rH+', '0 rH+'=>'0 rH+', 'A rH-'=>'A rh-', 'AB rH-'=>'AB rH-', 'B rH-'=>'B rH-', '0 rH-'=>'0 rH-');
@@ -112,9 +112,9 @@ class ProfileController extends Controller
 				    \File::delete(storage_path() . $fileSystemPath . $d->name);
                 }
 				$d->profile_id=$profile->id;
-				$d->path='/images/profile/';
-				$d->name=       $req->file('profilePicture')->getClientOriginalName();
+				$d->name= $req->file('profilePicture')->getClientOriginalName();
 				$d->extension=  $req->file('profilePicture')->getClientOriginalExtension();
+				$d->path='/images/profile/' . $d->name;
 				$d->save();
 
 				$fileSystemPath='/images/' . $user->id . '/profile/';

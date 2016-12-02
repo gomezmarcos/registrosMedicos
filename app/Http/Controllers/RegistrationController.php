@@ -31,11 +31,12 @@ class RegistrationController extends Controller
         $user->save();
 
         $profile = new Profile;
+        $profile->user_id=$user->id;
+        $profile->id=$user->id;
         $profile->names=$r->names;
         $profile->lastNames=$r->lastNames;
         $profile->dni=$r->dni;
         $profile->email1=$r->email;
-        $profile->user_id=$user->id;
         $profile->phone1=$r->phone;
         $profile->save();
 

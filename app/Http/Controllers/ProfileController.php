@@ -65,6 +65,7 @@ class ProfileController extends Controller
 		if(null == $profile) {
 			$profile = new Profile;
 			$profile->user_id=$user->id;
+			$profile->id=$user->id;//es necesario para que no haya errores en la app
 		}
 
 		$profile->names=$req->names;

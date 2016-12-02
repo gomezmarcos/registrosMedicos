@@ -33,7 +33,8 @@
     var NAMESPACE, MODAL_ID, STYLE_SETTING, OBJECT_PARAMS, DEFAULT_PREVIEW, objUrl, compare, isIE, handler,
         previewCache, getNum, hasFileAPISupport, hasDragDropSupport, hasFileUploadSupport, addCss, tMain1, tMain2,
         tPreview, tFileIcon, tClose, tCaption, tBtnDefault, tBtnLink, tBtnBrowse, tModalMain, tModal, tProgress, tSize,
-        tFooter, tActions, tActionDelete, tActionUpload, tActionZoom, tActionDrag, tTagBef, tTagBef1, tTagBef2, tTagAft,
+//        tFooter, tActions, tActionDelete, tActionUpload, tActionZoom, tActionDrag, tTagBef, tTagBef1, tTagBef2, tTagAft,
+        tFooter, tActions, tActionDelete, tActionDownload, tActionUpload, tActionZoom, tActionDrag, tTagBef, tTagBef1, tTagBef2, tTagAft,
         tGeneric, tHtml, tImage, tText, tVideo, tAudio, tFlash, tObject, tPdf, tOther, defaultFileActionSettings,
         defaultLayoutTemplates, defaultPreviewTemplates, defaultPreviewZoomSettings, defaultPreviewTypes, getElement,
         defaultPreviewSettings, defaultFileTypeSettings, isEmpty, isArray, ifSet, uniqId, htmlEncode, replaceTags,
@@ -298,6 +299,9 @@
         removeIcon: '<i class="glyphicon glyphicon-trash text-danger"></i>',
         removeClass: 'btn btn-xs btn-default',
         removeTitle: 'Remove file',
+        downloadClass: 'btn btn-xs btn-default',
+        downloadTitle: 'Descargar Archivo',
+        downloadIcon: '<i class="glyphicon glyphicon-download text-primary"></i>',
         uploadIcon: '<i class="glyphicon glyphicon-upload text-info"></i>',
         uploadClass: 'btn btn-xs btn-default',
         uploadTitle: 'Upload file',
@@ -377,13 +381,15 @@
         '</div>';
     tActions = '<div class="file-actions">\n' +
         '    <div class="file-footer-buttons">\n' +
-        '        {upload} {delete} {zoom} {other}' +
+        '        {upload} {delete} {zoom} {other} {download}' +
+        //'        {upload} {delete} {zoom} {other}' +
         '    </div>\n' +
         '    {drag}\n' +
         '    <div class="file-upload-indicator" title="{indicatorTitle}">{indicator}</div>\n' +
         '    <div class="clearfix"></div>\n' +
         '</div>';
     //noinspection HtmlUnknownAttribute
+    tActionDownload = '<a type="button" class="{downloadClass}" ' + 'title="{downloadTitle}"' + 'href="{data}">{downloadIcon}</a>\n';
     tActionDelete = '<button type="button" class="kv-file-remove {removeClass}" ' + 'title="{removeTitle}" {dataUrl}{dataKey}>{removeIcon}</button>\n';
     tActionUpload = '<button type="button" class="kv-file-upload {uploadClass}" title="{uploadTitle}">' +
         '{uploadIcon}</button>';
@@ -424,6 +430,7 @@
         footer: tFooter,
         actions: tActions,
         actionDelete: tActionDelete,
+        actionDownload: tActionDownload,
         actionUpload: tActionUpload,
         actionZoom: tActionZoom,
         actionDrag: tActionDrag,
@@ -2690,9 +2697,10 @@
             var self = this,
                 vUrl = url === false ? '' : ' data-url="' + url + '"',
                 vKey = key === false ? '' : ' data-key="' + key + '"',
-                btnDelete = '', btnUpload = '', btnZoom = '', btnDrag = '', css,
+                btnDownload='',btnDelete = '', btnUpload = '', btnZoom = '', btnDrag = '', css,
                 template = self._getLayoutTemplate('actions'), config = self.fileActionSettings,
                 otherButtons = self.otherActionButtons.replace(/\{dataKey}/g, vKey),
+                downloadClass = config.downloadClass  ,
                 removeClass = disabled ? config.removeClass + ' disabled' : config.removeClass;
             if (showDelete) {
                 btnDelete = self._getLayoutTemplate('actionDelete')
@@ -2702,6 +2710,14 @@
                     .replace(/\{dataUrl}/g, vUrl)
                     .replace(/\{dataKey}/g, vKey);
             }
+
+                btnDownload = self._getLayoutTemplate('actionDownload')
+                    .replace(/\{downloadClass}/g, downloadClass)
+                    .replace(/\{downloadIcon}/g, config.downloadIcon)
+                    .replace(/\{downloadTitle}/g, config.downloadTitle)
+                    .replace(/\{dataUrl}/g, vUrl)
+                    .replace(/\{dataKey}/g, vKey);
+
             if (showUpload) {
                 btnUpload = self._getLayoutTemplate('actionUpload')
                     .replace(/\{uploadClass}/g, config.uploadClass)
@@ -2724,6 +2740,7 @@
                 .replace(/\{upload}/g, btnUpload)
                 .replace(/\{zoom}/g, btnZoom)
                 .replace(/\{drag}/g, btnDrag)
+                .replace(/\{download}/g, btnDownload)
                 .replace(/\{other}/g, otherButtons);
         },
         _browse: function (e) {
@@ -3185,6 +3202,8 @@
         browseClass: 'btn btn-primary',
         removeIcon: '<i class="glyphicon glyphicon-trash"></i>',
         removeClass: 'btn btn-default',
+        downloadIcon: '<i class="glyphicon glyphicon-download"></i>',
+        downloadClass: 'btn btn-default',
         cancelIcon: '<i class="glyphicon glyphicon-ban-circle"></i>',
         cancelClass: 'btn btn-default',
         uploadIcon: '<i class="glyphicon glyphicon-upload"></i>',
@@ -3239,6 +3258,8 @@
         browseLabel: 'Browse &hellip;',
         removeLabel: 'Remove',
         removeTitle: 'Clear selected files',
+        downloadLabel: 'Descargar',
+        downloadTitle: 'Descargar archivos seleccionados',
         cancelLabel: 'Cancel',
         cancelTitle: 'Abort ongoing upload',
         uploadLabel: 'Upload',

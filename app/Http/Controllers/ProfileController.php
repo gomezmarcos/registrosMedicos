@@ -42,7 +42,6 @@ class ProfileController extends Controller
 
         $defaultProfilePicture = env('APP_STATIC_PATH') . '/images/admin/no_user.png';
 		$profilePicture = DocumentProfile::where('profile_id', $user->id)->first();
-        
 		$profilePicture = $profilePicture == null ? $defaultProfilePicture : 'images/profile/';
 
 		$listDniTypes = array('DNI'=>'DNI', 'LC'=>'LC', 'LE'=>'LE', 'Cedula'=>'Cedula');

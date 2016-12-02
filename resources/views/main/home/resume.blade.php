@@ -1,4 +1,7 @@
 @extends('layoutInitial')
+@section('title')
+   <title>RMP::Perfil</title>
+@endsection
 @section('content')
 <script>
      $(function () {

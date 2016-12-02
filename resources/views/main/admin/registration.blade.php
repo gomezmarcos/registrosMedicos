@@ -1,4 +1,7 @@
 @extends('layoutInitial') 
+@section('title')
+   <title>RMP::Registración</title>
+@endsection
 
 @section('content')
 <div class="container">

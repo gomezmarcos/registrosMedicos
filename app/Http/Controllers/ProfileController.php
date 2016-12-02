@@ -25,7 +25,7 @@ class ProfileController extends Controller
         }
         $user=Auth::user();
 
-		$profile = Profile::where('user_id', $user->id)->first();
+	$profile = Profile::where('user_id', $user->id)->first();
         $profile = $profile == null ? new Profile : $profile;
 
         $defaultProfilePicture = env('APP_STATIC_PATH') . '/images/admin/no_user.png';
@@ -60,72 +60,72 @@ class ProfileController extends Controller
 
 	function storeProfile(Request $req){
         $user=Auth::user();
-		$profile = Profile::where('user_id', $user->id)->first();
-		if(null == $profile) {
-			$profile = new Profile;
-			$profile->user_id=$user->id;
-			$profile->id=$user->id;//es necesario para que no haya errores en la app
-		}
+	$profile = Profile::where('user_id', $user->id)->first();
+        if(null == $profile) {
+          $profile = new Profile;
+          $profile->user_id=$user->id;
+        }
+        $profile->id=$user->id;//es necesario para que no haya errores en la app //FIX!! Siempre me olvido que esto tiene que estar
 
-		$profile->names=$req->names;
-		$profile->lastNames=$req->lastNames;
-		$profile->dni=$req->dni;
-		$profile->dniType=$req->dniType;
-		$profile->address=$req->address;
-		$profile->city=$req->city;
-		$profile->state=$req->state;
-		$profile->country="Argentina";
-		$profile->email1=$req->email1;
-		$profile->email2=$req->email2;
-		$profile->cellPhone1=$req->cellPhone1;
-		$profile->cellPhone2=$req->cellPhone2;
-		$profile->phone1=$req->phone1;
-		$profile->phone2=$req->phone2;
-		$profile->birthdate=$req->birthdate;
-		$profile->save();
+        $profile->names=$req->names;
+        $profile->lastNames=$req->lastNames;
+        $profile->dni=$req->dni;
+        $profile->dniType=$req->dniType;
+        $profile->address=$req->address;
+        $profile->city=$req->city;
+        $profile->state=$req->state;
+        $profile->country="Argentina";
+        $profile->email1=$req->email1;
+        $profile->email2=$req->email2;
+        $profile->cellPhone1=$req->cellPhone1;
+        $profile->cellPhone2=$req->cellPhone2;
+        $profile->phone1=$req->phone1;
+        $profile->phone2=$req->phone2;
+        $profile->birthdate=$req->birthdate;
+        $profile->save();
 
         $user->email=$req->email1;
         $user->save();
 
-		//sin cambios -> null
-		//borrado -> ""
-		//con imagen -> imagen
+        //sin cambios -> null
+        //borrado -> ""
+        //con imagen -> imagen
 
-		$whatToDo = $this->evaluateFile($req);
-		switch ($whatToDo) {
-			case 'DELETE_IMAGE':
-				if(! is_null($profile->documentProfile)){
-				    $doc = DocumentProfile::where('profile_id', $profile->id)->first();
-				    $fileSystemPath='/images/' . $user->id . '/profile/';
-					$filename = storage_path() . $fileSystemPath . $doc->name;
-					DocumentProfile::destroy($profile->documentProfile->id);
-					\File::delete($filename);
-				}
-				//else : do nothing
-				break;
-			case 'SAVE_IMAGE':
-				$d = DocumentProfile::where('profile_id', $profile->id)->first();
-				if(null == $d) {
-					$d = new DocumentProfile();
-                } else {
-				    $fileSystemPath='/images/' . $user->id . '/profile/';
-				    \File::delete(storage_path() . $fileSystemPath . $d->name);
-                }
-				$d->profile_id=$profile->id;
-				$d->name= $req->file('profilePicture')->getClientOriginalName();
-				$d->extension=  $req->file('profilePicture')->getClientOriginalExtension();
-				$d->path='/images/profile/' . $d->name;
-				$d->save();
+        $whatToDo = $this->evaluateFile($req);
+        switch ($whatToDo) {
+        case 'DELETE_IMAGE':
+          if(! is_null($profile->documentProfile)){
+            $doc = DocumentProfile::where('profile_id', $profile->id)->first();
+            $fileSystemPath='/images/' . $user->id . '/profile/';
+            $filename = storage_path() . $fileSystemPath . $doc->name;
+            DocumentProfile::destroy($profile->documentProfile->id);
+            \File::delete($filename);
+          }
+          //else : do nothing
+          break;
+        case 'SAVE_IMAGE':
+          $d = DocumentProfile::where('profile_id', $profile->id)->first();
+          if(null == $d) {
+            $d = new DocumentProfile();
+          } else {
+            $fileSystemPath='/images/' . $user->id . '/profile/';
+            \File::delete(storage_path() . $fileSystemPath . $d->name);
+          }
+          $d->profile_id=$profile->id;
+          $d->name= $req->file('profilePicture')->getClientOriginalName();
+          $d->extension=  $req->file('profilePicture')->getClientOriginalExtension();
+          $d->path='/images/profile/' . $d->name;
+          $d->save();
 
-				$fileSystemPath='/images/' . $user->id . '/profile/';
-				$req->file('profilePicture')->move( storage_path() . $fileSystemPath , $d->name );
-				break;
-			case 'DO_NOTHING':
-				break;
-		}
+          $fileSystemPath='/images/' . $user->id . '/profile/';
+          $req->file('profilePicture')->move( storage_path() . $fileSystemPath , $d->name );
+          break;
+        case 'DO_NOTHING':
+          break;
+        }
 
-		return redirect()->action('ProfileController@index');
-	}
+        return redirect()->action('ProfileController@index');
+        }
 
 	function storeProfileInfo(Request $req){
         $user=Auth::user();

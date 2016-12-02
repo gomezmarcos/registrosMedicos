@@ -21,7 +21,7 @@ class PasswordController extends Controller
     use ResetsPasswords;
 
     protected $redirectTo = '/resume';
-    protected $subject = "RMP:: Blanqueo de Contraseña"; 
+    protected $subject = "Blanqueo de Contraseña"; 
 
     /**
      * Create a new password controller instance.

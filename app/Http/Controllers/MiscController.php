@@ -74,6 +74,7 @@ class MiscController extends Controller
 
         $d = new DocumentMisc();
         $d->name=$pic->getClientOriginalName();
+        $d->extension=$pic->getClientOriginalExtension();
         $d->path='/images/misc/'.  $d->name ; 
         $d->misc_id=$req->docId;
         $d->save();

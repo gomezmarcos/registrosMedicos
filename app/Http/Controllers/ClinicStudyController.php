@@ -63,7 +63,7 @@ class ClinicStudyController extends Controller
 
     function destroyOtroStudy($id){
         $study = OtroStudy::findOrFail($id);
-        self::destroyStudyDocuments($study);
+        self::destroyStudyDocuments($study, 'otro');
         return redirect()->action('ClinicStudyController@index')
 		        ->with('study', 'other');
     }
@@ -92,7 +92,7 @@ class ClinicStudyController extends Controller
 
     function destroyRxStudy($id){
         $study = RxStudy::findOrFail($id);
-        self::destroyStudyDocuments($study);
+        self::destroyStudyDocuments($study, 'rx');
         return redirect()->action('ClinicStudyController@index')
 		        ->with('study', 'rx');
     }
@@ -121,7 +121,7 @@ class ClinicStudyController extends Controller
 
     function destroyEcoStudy($id){
         $study = EcoStudy::findOrFail($id);
-        self::destroyStudyDocuments($study);
+        self::destroyStudyDocuments($study, 'eco');
         return redirect()->action('ClinicStudyController@index')
 		        ->with('study', 'eco');
     }
@@ -129,18 +129,20 @@ class ClinicStudyController extends Controller
     /*
     remueve tanto de la base de datos, como de fichero
     */
-    function destroyStudyDocuments($study){
-        if($study->documents->first()){
-            $filename = storage_path() . $study->documents->first()->path;
-            \File::deleteDirectory($filename);
-        }
+    function destroyStudyDocuments($study, $type){
+        $userId=Auth::user()->id;
+        $filename = storage_path() . '/images/' . $userId . '/study/' . $type . '/' . $study->id . '/';
+        \File::deleteDirectory($filename);
         $study->destroy($study->id);
+
+        $type = $type == 'lab' ? 'laboratory' : $type;
+        DocumentStudy::where( $type . '_study_id', $study->id )->delete();
     }
 
     //LABORATORY DATA MANIPULATION :: BEGIN
     function destroyLaboratoryStudy($id){
         $study = LaboratoryStudy::findOrFail($id);
-        self::destroyStudyDocuments($study);
+        self::destroyStudyDocuments($study, 'lab');
 
         return redirect()->action('ClinicStudyController@index')
 		        ->with('study', 'laboratory');
@@ -171,11 +173,11 @@ class ClinicStudyController extends Controller
     //GENERAL DOCUMENT MANIPULATION :: BEGIN
     function deleteStudyDocument(Request $req){
         $study = DocumentStudy::findOrFail($req->key);
-        DocumentStudy::destroy($req->key);
         if(! is_null($study)){
             $filename = storage_path() . $study->path . $study->name;
             \File::delete($filename);
         }
+        DocumentStudy::destroy($req->key);
 
         return '{}';
     }
@@ -187,19 +189,23 @@ class ClinicStudyController extends Controller
         $studyType = '';
         if($req->studyType == 'laboratory'){
             $studyType = 'lab';
+            $study_column = 'laboratory_study_id';
         }elseif ($req->studyType == 'rx') {
             $studyType = 'rx';
+            $study_column = 'rx_study_id';
         }elseif ($req->studyType == 'eco') {
             $studyType = 'eco';
+            $study_column = 'eco_study_id';
         }elseif ($req->studyType == 'otro') {
             $studyType = 'otro';
+            $study_column = 'otro_study_id';
         }else{
             Log::error('no se identifico tipo de estudio');
         }
 
         try{
             $models = DocumentStudy::where([
-                ['laboratory_study_id', '=', $studyId],
+                [$study_column, '=', $studyId],
                 ['study_type', '=', $studyType]
                 ])->get();
         } 
@@ -226,6 +232,7 @@ class ClinicStudyController extends Controller
         return [$previews, $configurations];
     }
 
+    //should be create!
     function updateLaboratoryDocStudy(Request $req){
         $d = new DocumentStudy();
 
@@ -233,29 +240,29 @@ class ClinicStudyController extends Controller
         if($req->studyType == 'laboratory'){
             $studyType = 'lab';
             $pic = $req->file('inputFile')[0];
-
+            $d->laboratory_study_id = $req->docId;
         }elseif ($req->studyType == 'rx') {
             $studyType = 'rx';
             $pic = $req->file('rxInputFile')[0];
+            $d->rx_study_id = $req->docId;
         }elseif ($req->studyType == 'eco') {
             $studyType = 'eco';
             $pic = $req->file('ecoInputFile')[0];
+            $d->eco_study_id = $req->docId;
         }elseif ($req->studyType == 'otro') {
             $studyType = 'otro';
             $pic = $req->file('otroInputFile')[0];
+            $d->otro_study_id = $req->docId;
         }else{
             Log::error('no se identifico tipo de estudio');
+            return '{}';
         }
 
-        $d->path='/images/' . Auth::user()->id . '/study/'. $studyType . '/' . $req->docId . '/'; 
         if(is_null($pic)){
             return '{}';
         }
-        /*
-	    CHECK::margomez es necesario un id por cada sub modulo
-         */
-        $d->laboratory_study_id = $req->docId;
-        $d->rx_study_id = $req->docId;
+
+        $d->path='/images/' . Auth::user()->id . '/study/'. $studyType . '/' . $req->docId . '/'; 
         $d->name=$pic->getClientOriginalName();
         $d->extension=$pic->getClientOriginalExtension();
         $d->study_type= $studyType;

@@ -31,38 +31,34 @@ class MiscController extends Controller
 		$m->date=$req->date;
 		$m->save();
 
-        /*
-		if(! is_null($req->file)){
-			$d = new DocumentMisc();
-			$d->path='/images/misc/'; 
-			$d->extension=$req->file('file')->getClientOriginalExtension();
-			$d->misc_id=$m->id;
-			$d->name=$m->id;
-			$d->save();
+		return redirect()->action('MiscController@index');
+	}
 
-            \File::delete(storage_path() .'/images/' . $m->user_id . '/misc/' . $m->user_id . '.' . $d->extension);
+	function update($id, Request $req){
+		$user=Auth::user();
+		$m = Misc::findOrFail($id);
+		$m->title = $req->title;
+		$m->date = $req->date;
 
-			$req->file('file')->move( storage_path() . '/images/' . $m->user_id . '/misc/'. $m->id . '.' . $d->extension  );
-		}
-        */
+		$m->save();
+		return redirect()->action('MiscController@index');
+	}
+
+	function destroy($id){
+		Misc::destroy($id);
+		\File::deleteDirectory(storage_path() . '/images/' . $userId . '/misc/' . $id);
 
 		return redirect()->action('MiscController@index');
 	}
 
     function deleteDocument(Request $req){
-		$user_id=Auth::user()->id;
-        $study = DocumentMisc::findOrFail($req->key)->get();
-        if( $study->first() ){
-            $study=$study->first();
-            $filename = storage_path() . '/images/' . $user_id . '/misc/' . $study->misc_id . '/' . $study->name;
-            \File::delete($filename);
-        }
-        if(! is_null($study)){
-            $filename = storage_path() . '/images/' . $user_id . '/misc/' . $req->key . '/' . $study->name;
+		$userId=Auth::user()->id;
+        $study = DocumentMisc::findOrFail($req->key);
+        if( $study ){
+            $filename = storage_path() . '/images/' . $userId . '/misc/' . $study->misc_id . '/' . $study->name;
             \File::delete($filename);
         }
         DocumentMisc::destroy($req->key);
-
         return '{}';
     }
 
@@ -75,65 +71,17 @@ class MiscController extends Controller
         if ( $d->first() ) {
             return response()->json( 'Varios admite solo un archivo adjunto.', 501 );
         } 
+
         $d = new DocumentMisc();
-        $d->path='/images/misc/'.  $req->docId ; 
-        $d->misc_id=$req->docId;
         $d->name=$pic->getClientOriginalName();
+        $d->path='/images/misc/'.  $d->name ; 
+        $d->misc_id=$req->docId;
         $d->save();
 
         $pic->move( storage_path() . '/images/' . $user_id . '/misc/' . $req->docId . '/' ,  $d->name  );
 
         return '{}';
     }
-
-	function destroy($id){
-		$misc = Misc::findOrFail($id);
-		$doc = $misc->documentMisc;
-		Misc::destroy($id);
-		if(! is_null($doc)){
-			$filename = storage_path() . '/images/' . $misc->user_id . '/misc/' . $doc->misc_id . '/' . $doc->name  ;
-			\File::delete($filename);
-		}
-
-		return redirect()->action('MiscController@index');
-	}
-
-	function update($id, Request $req){
-		$user=Auth::user();
-		$m = Misc::findOrFail($id);
-		$m->title = $req->title;
-		$m->date = $req->date;
-
-        /*
-		$isImageToUpdate = !is_null($req->filee);
-		$isImageWithContent = $req->filee != '';
-
-		if($isImageToUpdate){
-			//delete previous image
-			$doc = $m->documentMisc;
-			if(!is_null($doc)){
-				$filename = storage_path() . '/images/' . $user->id . '/misc/' . $id . '.' . $doc->extension;
-				\File::delete($filename);
-				DocumentMisc::destroy($doc->id);
-			}
-
-			if($isImageWithContent){
-				//create new image
-				$d = new DocumentMisc();
-				$d->path='/images/misc/'; 
-				$d->name=$m->id;
-				$d->extension=$req->file('filee')->getClientOriginalExtension();
-				$d->misc_id=$m->id;
-				$d->save();
-				$req->file('filee')->move( storage_path() . $d->path . $d->name . '.' . $d->extension );
-			}
-
-		}
-         */
-		$m->save();
-		return redirect()->action('MiscController@index');
-	}
-
     function getMiscImages(Request $req){
         $miscId = $req->miscId;
         $user = Auth::user();
@@ -153,8 +101,7 @@ class MiscController extends Controller
         foreach ($models as $s) {
             $caption= $s->name; 
 
-            #$previews->prepend($initialPath . $s->name );
-            $previews->prepend($initialPath );
+            $previews->prepend($initialPath . $caption);
 
             $m = new GalleryConfigurationItem;
             $m->caption=$caption;

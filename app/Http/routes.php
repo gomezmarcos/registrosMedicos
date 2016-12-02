@@ -137,10 +137,9 @@ Route::get('/images/profile/{fileName}', function($fileName= null){
 
 use clinica\Misc;
 use clinica\DocumentMisc;
-Route::get('/images/misc/{miscId}', function($miscId = null){
-    $user = Auth::user();
-	$doc = DocumentMisc::where('misc_id', $miscId)->get()->first(); 
-	$path = storage_path() . '/images/' . $user->id . '/misc/' . $miscId . '/' . $doc->name;
+Route::get('/images/misc/{miscId}/{fileName}', function($miscId = null, $fileName= null){
+    $userId = Auth::user()->id;
+	$path = storage_path() . '/images/' . $userId . '/misc/' . $miscId . '/' . $fileName;
 	if (file_exists($path)) {
 		return Response::download($path);
     }

@@ -168,8 +168,6 @@ class ProfileController extends Controller
 		$profileHealthCare->healthCareId=$req->healthCareId;
 		$profileHealthCare->phone=$req->phone;
 		$profileHealthCare->web=$req->web;
-		$profileHealthCare->contact=$req->contact;
-		// dd($profileHealthCare);
 		$profileHealthCare->save();
 
 		return redirect()->action('ProfileController@index');

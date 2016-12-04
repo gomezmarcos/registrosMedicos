@@ -63,7 +63,7 @@
                     <li><a href="/studies">Estudios Clinicos</a></li>
                     <li><a href="/misc">Varios</a></li>
                     <li><a href="/profile">Editar Perfil</a></li>
-                  @if (Auth::user()->id == 4 or Auth::user()->id == 32 or Auth::user()->id == 31)
+                  @if (in_array(Auth::user()->id ,array(env('APP_ADMIN_USERS'))))
                     <li><a href="/registration">Registrar Usuarios</a></li>
                   @endif
                     <li>

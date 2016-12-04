@@ -14,12 +14,12 @@ use Validator;
 class RegistrationController extends Controller
 {
     function create(){
-        if (!Auth::check() 
-            || Auth::user()->id !== 4
-            || Auth::user()->id !== 32
-            || Auth::user()->id !== 31
-        )
+        $validUserIds=array(env('APP_ADMIN_USERS'));
+
+        if ( ! Auth::check() 
+             || ! in_array(Auth::user()->id, $validUserIds) ){
             return redirect('/resume');
+        }
         return view('main.admin.registration');
     }
 
@@ -57,7 +57,7 @@ class RegistrationController extends Controller
     {
         $v =  Validator::make($r, [
             'names' => 'required|max:255',
-            'email' => 'required|max:255',
+            'email' => 'required|max:255|unique:users',
             'phone' => 'required|max:255',
             'lastNames' => 'required|max:255',
             'dni' => 'required|max:9|unique:users',

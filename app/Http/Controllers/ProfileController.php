@@ -85,6 +85,7 @@ class ProfileController extends Controller
         $profile->save();
 
         $user->email=$req->email1;
+        $user->name=$req->names;
         $user->save();
 
         //sin cambios -> null

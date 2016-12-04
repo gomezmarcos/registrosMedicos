@@ -14,7 +14,7 @@ use Validator;
 class RegistrationController extends Controller
 {
     function create(){
-        $validUserIds=array(env('APP_ADMIN_USERS'));
+        $validUserIds=explode(",",env('APP_ADMIN_USERS'));
 
         if ( ! Auth::check() 
              || ! in_array(Auth::user()->id, $validUserIds) ){

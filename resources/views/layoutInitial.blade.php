@@ -63,9 +63,15 @@
                     <li><a href="/studies">Estudios Clinicos</a></li>
                     <li><a href="/misc">Varios</a></li>
                     <li><a href="/profile">Editar Perfil</a></li>
-                  @if (in_array(Auth::user()->id ,array(env('APP_ADMIN_USERS'))))
+               <?php
+                   $admins= explode(",",env('APP_ADMIN_USERS'));
+                   $user_id= Auth::user()->id;
+                   if( in_array($user_id, $admins) ){
+               ?>
                     <li><a href="/registration">Registrar Usuarios</a></li>
-                  @endif
+               <?php
+                   }
+                ?>
                     <li>
                         <a href="/logout">Cerrar Sesion <span class="fa fa-power-off"/></a>
                     </li>

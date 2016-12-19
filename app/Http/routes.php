@@ -157,3 +157,5 @@ Route::auth();
 Route::get('/home', 'HomeController@index');
 Route::get('/registration', 'RegistrationController@create');
 Route::post('/registration/store', 'RegistrationController@store');
+Route::get('/password', 'ProfileController@resetCurrentPassword');
+Route::post('/password/update', 'ProfileController@updatePassword');

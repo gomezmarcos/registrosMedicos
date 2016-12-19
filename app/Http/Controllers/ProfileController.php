@@ -3,6 +3,7 @@
 namespace clinica\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 use clinica\Http\Requests;
 use clinica\User;
@@ -16,9 +17,13 @@ use clinica\ClinicHistory;
 
 use Log;
 use Auth;
+use Hash;
+
+use RedirectsUsers;
 
 class ProfileController extends Controller
 {
+
     function index(){
         if (!Auth::check()) {
             return redirect('/login');
@@ -266,5 +271,40 @@ class ProfileController extends Controller
 			->with('pi', $clinicHistory)
 			->with('dp', $dp)
 			->with('phd', $phd);
+    }
+
+    public function resetCurrentPassword(Request $req){
+        return view('main.admin.resetCurrentPassword');
+    }
+
+    public function updatePassword(Request $req){
+        if (!Auth::check()) {
+            return redirect('/login');
+        }
+
+        $this->validate($req, [
+            'oldPassword' => 'required|min:6',
+            'password' => 'required|confirmed|min:6'
+        ]);
+        $user =Auth::user();
+		$dbPassword = User::where('id', $user->id)->first()->password;
+        if( Hash::check($req->oldPassword, $dbPassword) ){
+            $user->forceFill([
+                'password' => bcrypt($req->password),
+                'remember_token' => Str::random(60),
+            ])->save();
+
+            Auth::guard($this->getGuard())->login($user);
+            return redirect()->back()->with('status', "Contraseña actualizada!");
+        } else {
+            return redirect()->back()
+                ->withInput($req->only('oldPassword'))
+                ->withErrors(['oldPassword' => "La contraseña ingresada no es la correcta." ]);
+        }
+    }
+
+    protected function getGuard()
+    {
+        return property_exists($this, 'guard') ? $this->guard : null;
     }
 }

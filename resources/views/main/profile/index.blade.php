@@ -11,7 +11,7 @@
 
 @section('content')
 <div class="container">
-    <h3 class="page-header">Editar Perfil</h3>
+    <h3 class="page-header">Editar Perfil <a href="/password" class="btn btn-primary">Cambiar Contraseña</a></h3>
 <p>En esta seccion podremos editar informacion para que ante alguna eventualidad, nuestros datos esten claros y la ayuda sea pertinente.</p>
 
 

@@ -113,7 +113,7 @@ class ClinicStudyController extends Controller
     function updateEcoStudy($id, Request $req){
         $m = EcoStudy::findOrFail($id);
         $m->title = $req->title;
-        $m->date = $req->editRxDate;
+        $m->date = $req->editEcoDate;
         $m->save();
         return redirect()->action('ClinicStudyController@index')
 		        ->with('study', 'eco');

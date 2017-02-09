@@ -84,7 +84,7 @@
     <div style="margin:50px">
     <hr>
     <footer>
-        <p class="text-center">© Registros Medicos Personales - 2016</p>
+        <p class="text-center">© Registro Medico Personal - 2016</p>
     </footer>
     </div>
 </body>

@@ -207,7 +207,9 @@ class ClinicStudyController extends Controller
             $models = DocumentStudy::where([
                 [$study_column, '=', $studyId],
                 ['study_type', '=', $studyType]
-                ])->get();
+            ])
+            ->orderBy('name', 'desc')
+            ->get();
         } 
         catch(\Exception $e){
             error_log($e);

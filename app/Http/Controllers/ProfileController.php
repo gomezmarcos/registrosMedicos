@@ -87,10 +87,15 @@ class ProfileController extends Controller
         $profile->phone1=$req->phone1;
         $profile->phone2=$req->phone2;
         $profile->birthdate=$req->birthdate;
+        
+        //Tutor task
+        $profile->tutorName=$req->tutorName;
+        $profile->tutorDni=$req->tutorDni;
         $profile->save();
 
         $user->email=$req->email1;
         $user->name=$req->names;
+
         $user->save();
 
         //sin cambios -> null

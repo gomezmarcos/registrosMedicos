@@ -118,6 +118,20 @@
             <div class="help-block with-errors"></div>
       </div>
   </div>
+
+  <div class="col-md-12 well">
+    <h3>Datos del Tutor o Responsable</h3>
+
+      <div class="form-group col-md-8">
+            <label for="tutorName" class="control-label">Nombre Completo</label>
+            <input type="text" name="tutorName" class="form-control" value="{{ $p->tutorName or '' }}" >
+      </div>
+      <div class="form-group col-md-4">
+            <label for="tutorDni" class="control-label">DNI</label>
+            <input type="text" name="tutorDni" class="form-control" value="{{ $p->tutorDni or '' }}" >
+      </div>
+  </div>
+
   
   
 

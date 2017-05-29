@@ -27,7 +27,7 @@
         </div>
         <div class="col-md-9">
             <p>
-                <h1 class="media-heading">{{$p->lastNames . ', ' . $p->names}}</h1>
+                <h1 class="media-heading">{{ucwords($p->lastNames . ', ' . $p->names)}}</h1>
                 <b>
                 @if ( $p->dniType  !== '')
                     {{$p->dniType}} 
@@ -39,10 +39,13 @@
                 @if ( $p->birthDate  !== '')
                     <b>Fecha de Nacimiento: </b>{{$p->birthDate }}</br>
                 @endif
-                {{($p->address!== '')? $p->address . ', ' :  ''}} 
-                {{($p->city!== '')? $p->city . ', ' :  ''}} 
-                {{($p->state!== '')? $p->state . '- ' :  ''}} 
-                {{($p->country!== '')? $p->country . '.' :  ''}} </br>
+                {{($p->address!== '')? ucwords($p->address) . ', ' :  ''}} 
+                {{($p->city!== '')? ucwords($p->city) . ', ' :  ''}} 
+                {{($p->state!== '')? ucwords($p->state) . '- ' :  ''}} 
+                {{($p->country!== '')? ucwords($p->country) . '.' :  ''}} </br>
+                @if ( $p->tutorName!== '')
+                    <div class="alert alert-info">Tutor/Responsable: {{ucwords($p->tutorName) }}, con DNI: {{ucwords($p->tutorDni) }}</div>
+                @endif
             </p>
         </div>
     </div>
